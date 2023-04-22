@@ -16,10 +16,26 @@ from apps.authentication.models import Register
 NULL={}
 
 def getUser(request):
-        user = Register.objects.get(id=request.session['user_id'])
-        return user
+    """
+        Функция получает пользователя, соответствующего идентификатору пользователя в сессии.
+
+        :param request: HttpRequest-запрос, который содержит идентификатор пользователя в сессии.
+        :type request: HttpRequest
+        :return: Объект пользователя Register, соответствующий идентификатору в сессии.
+        :rtype: Register
+    """
+    user = Register.objects.get(id=request.session['user_id'])
+    return user
     
 def index(request):
+    """
+        Функция отображения домашней страницы приложения.
+
+        :param request: HttpRequest-запрос.
+        :type request: HttpRequest
+        :return: Ответ HttpResponse, отображающий домашнюю страницу приложения.
+        :rtype: HttpResponse
+    """
     if 'user_id' in request.session:
         user = getUser(request)
     else:
@@ -50,6 +66,14 @@ def index(request):
 
 
 def create_new_project(request):
+    """
+        Функция создания нового проекта.
+
+        :param request: HttpRequest-запрос.
+        :type request: HttpRequest
+        :return: Ответ HttpResponse, отображающий страницу создания нового проекта.
+        :rtype: HttpResponse
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -100,6 +124,16 @@ def create_new_project(request):
 
 
 def show_project_details(request, project_id):
+    """
+        Отображает страницу с подробной информацией о проекте.
+
+        :param request: объект запроса Django.
+        :type request: HttpRequest.
+        :param project_id: идентификатор проекта.
+        :type project_id: int.
+        :return: ответ на запрос с использованием шаблона `project-details.html` и переданным контекстом.
+        :rtype: HttpResponse.
+    """
     if 'user_id' not in request.session:
         user = NULL
     else:
@@ -184,6 +218,13 @@ def show_project_details(request, project_id):
  
 
 def get_tag_projects(request, tag_id):
+    """
+        Возвращает страницу со списком проектов, связанных с указанным тегом.
+
+        :param request: запрос
+        :param tag_id: идентификатор тега
+        :return: страница со списком проектов
+    """
     if 'user_id' not in request.session:
         user = NULL
     else:
@@ -219,6 +260,13 @@ def get_tag_projects(request, tag_id):
 
 
 def get_category_projects(request, category_id):
+    """
+        Возвращает страницу со списком проектов, связанных с указанной категорией.
+
+        :param request: запрос
+        :param category_id: идентификатор категории
+        :return: страница со списком проектов
+    """
     if 'user_id' not in request.session:
         user = NULL
     else:
@@ -256,6 +304,12 @@ def get_category_projects(request, category_id):
 
 
 def all_projects(request):
+    """
+        Возвращает страницу со списком всех проектов.
+
+        :param request: запрос
+        :return: страница со списком всех проектов
+    """
     if 'user_id' not in request.session:
         user = NULL
     else:
@@ -289,6 +343,12 @@ def all_projects(request):
 
 
 def get_featured_projects(request):
+    """
+        Возвращает список проектов, отмеченных как "Featured Projects".
+
+        :param request: объект запроса Django
+        :return: возвращает объект ответа Django с отображением всех проектов.
+    """
     if 'user_id' not in request.session:
         user = NULL
     else:
@@ -322,6 +382,13 @@ def get_featured_projects(request):
 
 
 def donate(request, project_id):
+    """
+        Обрабатывает POST запрос на странице проекта и создает запись о пожертвовании в базе данных.
+
+        :param request: объект запроса Django
+        :param project_id: идентификатор проекта, на который происходит пожертвование
+        :return: возвращает объект ответа Django с отображением страницы проекта.
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -339,6 +406,13 @@ def donate(request, project_id):
 
 
 def create_comment(request, project_id):
+    """
+        Обрабатывает POST запрос на странице проекта и создает запись о комментарии в базе данных.
+
+        :param request: объект запроса Django
+        :param project_id: идентификатор проекта, к которому добавляется комментарий
+        :return: возвращает объект ответа Django с отображением страницы проекта.
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -356,6 +430,20 @@ def create_comment(request, project_id):
 
 
 def add_report(request, project_id):
+    """
+        Добавляет жалобу на проект.
+
+        Аргументы:
+        - request: объект запроса
+        - project_id: идентификатор проекта
+
+        Возвращает:
+        - если пользователь не аутентифицирован, то функция перенаправляет на страницу входа
+        - если метод запроса POST, то функция создает объект `Project_Report` с текстом жалобы `'ip'`,
+        идентификатором проекта `project_id` и идентификатором пользователя, который отправил жалобу `user_id`,
+        и перенаправляет на страницу проекта
+        - в противном случае функция просто возвращает страницу проекта без изменений
+        """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -372,6 +460,17 @@ def add_report(request, project_id):
 
 
 def add_comment_report(request, comment_id):
+    """
+        Добавляет жалобу на комментарий, связанный с проектом.
+
+        :param request: объект запроса
+        :type request: HttpRequest
+        :param comment_id: идентификатор комментария
+        :type comment_id: int
+        :return: перенаправление на страницу проекта
+        :rtype: HttpResponseRedirect
+        :raises: Redirect на страницу входа, если пользователь не авторизован
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -389,7 +488,15 @@ def add_comment_report(request, comment_id):
             return redirect('show_project', project.id)
 
 
-def create_comment_reply(request, comment_id):
+def create_comment_reply(request, comment_id, project=None):
+    """
+       Создает ответ на комментарий и перенаправляет пользователя на страницу проекта, к которому относится комментарий.
+
+       :param request: HttpRequest объект, содержащий информацию о запросе пользователя.
+       :param comment_id: Идентификатор комментария, на который необходимо создать ответ.
+       :param project: Объект модели Project, к которому относится комментарий (опционально, по умолчанию None).
+       :return: HttpResponse объект, представляющий перенаправление на страницу проекта или страницу входа в систему.
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -409,6 +516,13 @@ def create_comment_reply(request, comment_id):
 
 
 def add_category(request):
+    """
+        Создает новую категорию в базе данных при отправке формы со страницы создания категории.
+
+
+        :param request: объект запроса
+        :return: HttpResponseRedirect
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -436,6 +550,15 @@ def add_category(request):
 
 
 def search(request):
+    """
+        Функция выполняет поиск проектов и тегов по заданной строке поиска и возвращает результат в шаблон "search-result.html".
+
+        Аргументы:
+        - `request`: запрос пользователя.
+
+        Возвращаемое значение:
+        - Возвращает объект `HttpResponse` с результатом выполнения поиска.
+    """
     if 'user_id' not in request.session:
         user = NULL
     else:
@@ -485,6 +608,16 @@ def search(request):
 
 
 def rate(request, project_id):
+    """
+        Обрабатывает оценку проекта.
+
+        :param request: объект запроса
+        :type request: HttpRequest
+        :param project_id: идентификатор проекта
+        :type project_id: int
+        :return: перенаправление на страницу проекта
+        :rtype: HttpResponseRedirect
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -504,7 +637,16 @@ def rate(request, project_id):
 
 
 def apply_rating(project, user, rating):
+    """
+    Функция проверяет, ставил ли пользователь ранее оценку для данного проекта.
+    Если да, то функция изменяет значение оценки на новое. Если нет, то создается новая оценка.
 
+    Атрибуты:
+    ---------
+    project - объект проекта, для которого ставится оценка
+    user - объект пользователя, который ставит оценку
+    rating - строковое значение, содержащее оценку, которую пользователь хочет поставить (должно быть числом)
+    """
     # If User rated the same project before --> change rate value
     prev_user_rating = project.rate_set.filter(user_id=user)
     if prev_user_rating:
@@ -518,6 +660,17 @@ def apply_rating(project, user, rating):
 
 
 def cancel_project(request, project_id):
+    """
+        Функция отменяет проект по идентификатору.
+
+        :param request: запрос, который содержит информацию о клиенте и его сессии.
+        :type request: HttpRequest
+        :param project_id: идентификатор проекта.
+        :type project_id: int
+        :return: перенаправление на страницу профиля пользователя, если отмена прошла успешно,
+                 или на страницу проекта, если проект не может быть отменен.
+        :rtype: HttpResponseRedirect
+    """
     if 'user_id' not in request.session:
         user = NULL
         return redirect('login')
@@ -538,7 +691,13 @@ def cancel_project(request, project_id):
                 
            
 
-def pages(request):  
+def pages(request):
+    """
+        Функция для загрузки страниц сайта на основе запрошенного URL-адреса.
+
+        :param request: объект HttpRequest, содержащий информацию о запросе.
+        :return: ответ, содержащий запрошенную страницу.
+    """
     if 'user_id' not in request.session:
         user = NULL
     else:

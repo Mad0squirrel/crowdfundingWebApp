@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html  lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>apps.authentication.views</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/translations.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+  <link rel="search" title="Поиск" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">crowdfundingWebApp</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Быстрый поиск</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Поиск" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../modules.html#crowdfundingwebapp">crowdfundingwebapp</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../apps.html" class="reference internal ">apps package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../core.html" class="reference internal ">core package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../gunicorn-cfg.html" class="reference internal ">gunicorn-cfg module</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../manage.html" class="reference internal ">manage module</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">Код модуля</a> &raquo;</li>
+    
+    <li>apps.authentication.views</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <h1>Исходный код apps.authentication.views</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+
+
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">context</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">loader</span><span class="p">,</span> <span class="n">RequestContext</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.hashers</span> <span class="kn">import</span> <span class="n">make_password</span><span class="p">,</span> <span class="n">check_password</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">apps.authentication.models</span> <span class="kn">import</span> <span class="n">Register</span>
+<span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="kn">import</span> <span class="n">force_bytes</span><span class="p">,</span> <span class="n">force_str</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">login</span><span class="p">,</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">logout</span>
+<span class="kn">from</span> <span class="nn">django.contrib.sites.shortcuts</span> <span class="kn">import</span> <span class="n">get_current_site</span>
+<span class="kn">from</span> <span class="nn">django.utils.http</span> <span class="kn">import</span> <span class="n">urlsafe_base64_encode</span><span class="p">,</span> <span class="n">urlsafe_base64_decode</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">render_to_string</span>
+
+<span class="kn">from</span> <span class="nn">apps.authentication.forms</span> <span class="kn">import</span> <span class="n">DeleteAccountForm</span><span class="p">,</span> <span class="n">EditProfileForm</span><span class="p">,</span> <span class="n">LoginForm</span><span class="p">,</span> <span class="n">ResetPasswordEmailForm</span><span class="p">,</span> \
+    <span class="n">ResetPasswordForm</span><span class="p">,</span> <span class="n">SignupForm</span>
+<span class="kn">from</span> <span class="nn">apps.authentication.tokens</span> <span class="kn">import</span> <span class="n">account_activation_token</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">EmailMessage</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">messages</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.forms</span> <span class="kn">import</span> <span class="n">AuthenticationForm</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ObjectDoesNotExist</span>
+
+<span class="kn">from</span> <span class="nn">apps.home.models</span> <span class="kn">import</span> <span class="n">Donation</span><span class="p">,</span> <span class="n">Project</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">send_mail</span>
+
+<span class="kn">from</span> <span class="nn">apps.home.views</span> <span class="kn">import</span> <span class="n">getUser</span>
+
+
+<div class="viewcode-block" id="user_login"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.user_login">[документация]</a><span class="k">def</span> <span class="nf">user_login</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция для авторизации пользователей</span>
+<span class="sd">        :param request: HttpRequest объект, представляющий запрос.</span>
+<span class="sd">        :return: HttpResponse в случае успешной авторизации или рендеринг страницы с формой входа в случае ошибки</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">LoginForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">email</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+                <span class="n">password</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+                <span class="n">encryptpassword</span> <span class="o">=</span> <span class="n">make_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">encryptpassword</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="n">ObjectDoesNotExist</span><span class="p">):</span>
+                    <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_active</span><span class="p">:</span>
+                        <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+                        <span class="n">user</span><span class="o">.</span><span class="n">last_login</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                        <span class="n">user</span><span class="o">.</span><span class="n">is_login</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;You are now logged in as </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;please check your email to activate it !!&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;user doesn&#39;t exist &quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Invalid email or password.&#39;</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">LoginForm</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/login.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;login_form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;msg&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="signup"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.signup">[документация]</a><span class="k">def</span> <span class="nf">signup</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Отображение страницы регистрации и обработка POST-запросов на создание нового пользователя.</span>
+<span class="sd">        Если пользователь уже аутентифицирован, перенаправляет на главную страницу.</span>
+<span class="sd">        :param request: HttpRequest объект, представляющий запрос.</span>
+<span class="sd">        :return: HttpResponse объект, представляющий ответ.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">SignupForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">hashedpassword</span> <span class="o">=</span> <span class="n">make_password</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+                <span class="n">check</span> <span class="o">=</span> <span class="n">check_password</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="n">hashedpassword</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+                <span class="n">first_name</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span>
+                <span class="n">last_name</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span>
+                <span class="n">email</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+                <span class="n">password</span> <span class="o">=</span> <span class="n">hashedpassword</span>
+                <span class="n">phone</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;phone&#39;</span><span class="p">]</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span>
+                      <span class="p">,</span> <span class="n">email</span>
+                      <span class="p">,</span> <span class="n">password</span>
+                      <span class="p">,</span> <span class="n">phone</span>
+                      <span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+
+                <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="n">last_name</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span>
+                                               <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+                                               <span class="n">phone</span><span class="o">=</span><span class="n">phone</span><span class="p">,</span> <span class="n">profile_img</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+                <span class="n">current_site</span> <span class="o">=</span> <span class="n">get_current_site</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+                <span class="n">mail_subject</span> <span class="o">=</span> <span class="s1">&#39;Activation link has been sent to your email id&#39;</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;accounts/acc_active_email.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+                    <span class="s1">&#39;domain&#39;</span><span class="p">:</span> <span class="n">current_site</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
+                    <span class="s1">&#39;uid&#39;</span><span class="p">:</span> <span class="n">urlsafe_base64_encode</span><span class="p">(</span><span class="n">force_bytes</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">)),</span>
+                    <span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">account_activation_token</span><span class="o">.</span><span class="n">make_token</span><span class="p">(</span><span class="n">user</span><span class="p">),</span>
+                <span class="p">})</span>
+                <span class="c1"># to_email = form.cleaned_data.get(&#39;email&#39;)</span>
+                <span class="c1"># email = EmailMessage(</span>
+                <span class="c1">#     mail_subject, message, to=[to_email]</span>
+                <span class="c1"># )</span>
+                <span class="c1"># email.send()</span>
+                <span class="n">to_email</span> <span class="o">=</span> <span class="p">[</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)]</span>
+                <span class="n">email</span> <span class="o">=</span> <span class="n">EmailMessage</span><span class="p">(</span>
+                    <span class="n">mail_subject</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">to_email</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">from_email</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_HOST_USER</span>
+                <span class="c1"># email.send()</span>
+                <span class="n">send_mail</span><span class="p">(</span><span class="n">mail_subject</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">from_email</span><span class="p">,</span> <span class="n">to_email</span><span class="p">)</span>
+
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Please confirm your email address to complete the registration&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">SignupForm</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;accounts/register.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;msg&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="p">})</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="activate"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.activate">[документация]</a><span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">uidb64</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Представление для активации учётной записи пользователя по электронной почте.</span>
+
+<span class="sd">        :param request: HttpRequest объект, представляющий запрос.</span>
+<span class="sd">        :param uidb64: строка, представляющая идентификатор пользователя в кодировке base64</span>
+<span class="sd">        :param token: токен для проверки подлинности активации</span>
+<span class="sd">        :return: HttpResponse объект, который перенаправляет пользователя на страницу входа, если активация прошла успешно.</span>
+<span class="sd">                 Если токен недействителен, возвращается ответ с текстом &quot;Activation link is invalid!&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">force_str</span><span class="p">(</span><span class="n">urlsafe_base64_decode</span><span class="p">(</span><span class="n">uidb64</span><span class="p">))</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">uid</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">OverflowError</span><span class="p">,</span> <span class="n">ObjectDoesNotExist</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">account_activation_token</span><span class="o">.</span><span class="n">check_token</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;login&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># form = SignupForm()</span>
+        <span class="c1"># return render(request, &#39;accounts/register.html&#39;, {&#39;form&#39;: form ,&quot;msg&quot; :&#39;Activation link is invalid!&#39;})</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Activation link is invalid!&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="user_logout"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.user_logout">[документация]</a><span class="k">def</span> <span class="nf">user_logout</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Осуществляет выход пользователя из системы.</span>
+
+<span class="sd">    :param request: HttpRequest объект, представляющий запрос.</span>
+<span class="sd">    :return: объект HttpResponseRedirect, который перенаправляет на страницу входа (login).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;you are logged out &quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;you must login &quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;login&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EditProfile"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.EditProfile">[документация]</a><span class="k">def</span> <span class="nf">EditProfile</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Редактирование профиля пользователя.</span>
+
+<span class="sd">        :param request: HttpRequest объект, представляющий запрос.</span>
+<span class="sd">        :return: HttpResponse объект.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user_object</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="n">Register</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+
+            <span class="n">form</span> <span class="o">=</span> <span class="n">EditProfileForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">user_object</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">user_object</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+
+                <span class="n">user_object</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span>
+                <span class="n">user_object</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span>
+                <span class="n">user_object</span><span class="o">.</span><span class="n">phone</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;phone&#39;</span><span class="p">]</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">image</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">user_object</span><span class="o">.</span><span class="n">profile_img</span> <span class="o">=</span> <span class="n">user_object</span><span class="o">.</span><span class="n">profile_img</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">user_object</span><span class="o">.</span><span class="n">profile_img</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="n">user_object</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">user_object</span><span class="o">.</span><span class="n">password</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">hashedpassword</span> <span class="o">=</span> <span class="n">make_password</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+                    <span class="n">user_object</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">hashedpassword</span>
+                <span class="n">user_object</span><span class="o">.</span><span class="n">country</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span>
+                <span class="n">user_object</span><span class="o">.</span><span class="n">birthdate</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;birthdate&#39;</span><span class="p">]</span>
+                <span class="n">user_object</span><span class="o">.</span><span class="n">facebook_profile</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;facebook_profile&#39;</span><span class="p">]</span>
+
+                <span class="n">user_object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;profile&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">EditProfileForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">user_object</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;profile/editProfile.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;msg&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user_object</span><span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="profile"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.profile">[документация]</a><span class="k">def</span> <span class="nf">profile</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Отображает страницу профиля пользователя с информацией о его проектах и пожертвованиях.</span>
+
+<span class="sd">    :param request: HttpRequest объект, представляющий запрос.</span>
+<span class="sd">    :return: Возвращает объект ответа, который содержит результат рендеринга шаблона HTML.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user_object</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+            <span class="n">projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+            <span class="n">donations</span> <span class="o">=</span> <span class="n">Donation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+
+            <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+                <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">Register</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;profile/Profile.html&#39;</span><span class="p">,</span>
+                      <span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user_object</span><span class="p">,</span> <span class="s2">&quot;projects&quot;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span> <span class="s2">&quot;donations&quot;</span><span class="p">:</span> <span class="n">donations</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">images</span><span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="emailPasswordReset"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.emailPasswordReset">[документация]</a><span class="k">def</span> <span class="nf">emailPasswordReset</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Функция отправляет на email пользователя ссылку для сброса пароля.</span>
+<span class="sd">    :param request: объект HttpRequest, содержащий информацию о запросе</span>
+<span class="sd">    :return: Если запрос отправлен методом POST и форма валидна,</span>
+<span class="sd">    то возвращается HttpResponse с сообщением о необходимости подтверждения email.</span>
+<span class="sd">Если запрос отправлен методом POST и форма не валидна, то возвращается HttpResponse с сообщением об ошибке.</span>
+<span class="sd">Если запрос отправлен методом GET, то возвращается HTML-страница с формой ResetPasswordEmailForm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">ResetPasswordEmailForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">email</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="p">(</span><span class="n">ObjectDoesNotExist</span><span class="p">):</span>
+                <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;Invalid email&quot;</span><span class="p">)</span>
+                <span class="n">form</span> <span class="o">=</span> <span class="n">ResetPasswordEmailForm</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/emailResetPassword.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+
+            <span class="n">current_site</span> <span class="o">=</span> <span class="n">get_current_site</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+            <span class="n">mail_subject</span> <span class="o">=</span> <span class="s1">&#39;Activation link has been sent to your email id&#39;</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;accounts/acc_reset_password.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+                <span class="s1">&#39;domain&#39;</span><span class="p">:</span> <span class="n">current_site</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
+                <span class="s1">&#39;uid&#39;</span><span class="p">:</span> <span class="n">urlsafe_base64_encode</span><span class="p">(</span><span class="n">force_bytes</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">pk</span><span class="p">)),</span>
+                <span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">account_activation_token</span><span class="o">.</span><span class="n">make_token</span><span class="p">(</span><span class="n">user</span><span class="p">),</span>
+            <span class="p">})</span>
+            <span class="n">to_email</span> <span class="o">=</span> <span class="p">[</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)]</span>
+            <span class="n">email</span> <span class="o">=</span> <span class="n">EmailMessage</span><span class="p">(</span>
+                <span class="n">mail_subject</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="n">to_email</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">from_email</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_HOST_USER</span>
+            <span class="c1"># email.send()</span>
+            <span class="n">send_mail</span><span class="p">(</span><span class="n">mail_subject</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">from_email</span><span class="p">,</span> <span class="n">to_email</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Please confirm your email address to complete the reset password&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;user doesn&#39;t exist &quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">ResetPasswordEmailForm</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/emailResetPassword.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="ResetPasswordLink"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.ResetPasswordLink">[документация]</a><span class="k">def</span> <span class="nf">ResetPasswordLink</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">uidb64</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Функция выполняет декодирование `uidb64` в строку, затем получает пользователя `user`</span>
+<span class="sd">    с помощью этого значения `uid`. Если пользователь существует и токен является действительным,</span>
+<span class="sd">    то идентификатор пользователя устанавливается в сеансе и происходит перенаправление на страницу</span>
+<span class="sd">    сброса пароля `passwordReset`. Если пользователь не существует или токен недействительный,</span>
+<span class="sd">    возвращается `HttpResponse` с сообщением &quot;Ссылка на сброс пароля недействительна!&quot;.</span>
+
+<span class="sd">    :param request: объект HttpRequest, содержащий информацию о запросе</span>
+<span class="sd">    :param uidb64: строка, содержащая закодированный идентификатор пользователя</span>
+<span class="sd">    :param token: строка, содержащая токен для проверки действительности ссылки на сброс пароля</span>
+<span class="sd">    :return: Если пользователь существует и токен является действительным,</span>
+<span class="sd">    то идентификатор пользователя устанавливается в сеансе и происходит перенаправление на страницу</span>
+<span class="sd">    сброса пароля `passwordReset`. Если пользователь не существует или токен недействительный,</span>
+<span class="sd">    возвращается `HttpResponse` с сообщением &quot;Ссылка на сброс пароля недействительна!&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">force_str</span><span class="p">(</span><span class="n">urlsafe_base64_decode</span><span class="p">(</span><span class="n">uidb64</span><span class="p">))</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">uid</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">OverflowError</span><span class="p">,</span> <span class="n">ObjectDoesNotExist</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">account_activation_token</span><span class="o">.</span><span class="n">check_token</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;password_reset-session&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;passwordReset&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;Reset Password link is invalid!&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ResetPassword"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.ResetPassword">[документация]</a><span class="k">def</span> <span class="nf">ResetPassword</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Функция принимает объект запроса request и идентификатор пользователя id. Она выполняет сброс пароля пользователя</span>
+<span class="sd">     и возвращает его на страницу входа в случае успешного сброса.</span>
+<span class="sd">    :param request: объект HttpRequest, содержащий информацию о запросе</span>
+<span class="sd">    :param id: идентификатор пользователя, чей пароль должен быть сброшен.</span>
+<span class="sd">    :return: HttpResponse: объект ответа, который возвращает пользователя на страницу входа в случае успешного</span>
+<span class="sd">     сброса пароля или перенаправляет его на страницу входа, если нет активной сессии сброса пароля.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;password_reset-session&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">ResetPasswordForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="n">ObjectDoesNotExist</span><span class="p">):</span>
+                    <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">hashedpassword</span> <span class="o">=</span> <span class="n">make_password</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+                    <span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">hashedpassword</span>
+                    <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                    <span class="k">del</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;password_reset-session&#39;</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/passwordReset.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">ResetPasswordForm</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/passwordReset.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deleteAccount"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.views.deleteAccount">[документация]</a><span class="k">def</span> <span class="nf">deleteAccount</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Функция  удаляет учетную запись пользователя.</span>
+<span class="sd">    :param request: объект HttpRequest, содержащий информацию о запросе</span>
+<span class="sd">    :return: Если пользователь не авторизован, функция перенаправляет на страницу входа.</span>
+<span class="sd">Если метод запроса POST и форма действительна, функция удаляет учетную запись пользователя,</span>
+<span class="sd"> удаляет идентификатор пользователя из сеанса и перенаправляет на страницу входа.</span>
+<span class="sd">Если метод запроса не POST, функция возвращает форму удаления учетной записи пользователя и рендерит шаблон</span>
+<span class="sd"> Delete_account.html.</span>
+<span class="sd">Если метод запроса POST и форма недействительна, функция возвращает форму удаления учетной записи пользователя,</span>
+<span class="sd"> сообщение об ошибке и рендерит шаблон Delete_account.html.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">DeleteAccountForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">password</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span>
+                <span class="n">encryptpassword</span> <span class="o">=</span> <span class="n">make_password</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+                <span class="k">except</span> <span class="p">(</span><span class="n">ObjectDoesNotExist</span><span class="p">):</span>
+                    <span class="n">user</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">encryptpassword</span><span class="p">:</span>
+                        <span class="n">user</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+                        <span class="k">del</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+                        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;password not correct&#39;</span>
+                        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/Delete_account.html&quot;</span><span class="p">,</span>
+                                      <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;msg&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">})</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/Delete_account.html&quot;</span><span class="p">,</span>
+                              <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">})</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">DeleteAccountForm</span><span class="p">()</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="o">=</span><span class="s2">&quot;accounts/Delete_account.html&quot;</span><span class="p">,</span>
+                          <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2023, Stocksmin.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

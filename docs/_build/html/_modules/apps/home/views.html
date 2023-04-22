@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html  lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>apps.home.views</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/translations.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+  <link rel="search" title="Поиск" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">crowdfundingWebApp</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Быстрый поиск</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Поиск" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../modules.html#crowdfundingwebapp">crowdfundingwebapp</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../apps.html" class="reference internal ">apps package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../core.html" class="reference internal ">core package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../gunicorn-cfg.html" class="reference internal ">gunicorn-cfg module</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../manage.html" class="reference internal ">manage module</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">Код модуля</a> &raquo;</li>
+    
+    <li>apps.home.views</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <h1>Исходный код apps.home.views</h1><div class="highlight"><pre>
+<span></span><span class="c1"># from asyncio.windows_events import NULL</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render</span><span class="p">,</span> <span class="n">get_object_or_404</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">loader</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Avg</span><span class="p">,</span> <span class="n">Sum</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">apps.home.models</span> <span class="kn">import</span> <span class="n">Category</span><span class="p">,</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">Donation</span><span class="p">,</span> <span class="n">Project</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">Project_Report</span><span class="p">,</span> <span class="n">Rate</span><span class="p">,</span> <span class="n">Reply</span><span class="p">,</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">Comment_Report</span>
+<span class="kn">from</span> <span class="nn">apps.home.forms</span> <span class="kn">import</span> <span class="n">Project_Form</span><span class="p">,</span> <span class="n">Report_form</span><span class="p">,</span> <span class="n">Reply_form</span><span class="p">,</span> <span class="n">Category_form</span>
+<span class="kn">from</span> <span class="nn">django.forms.utils</span> <span class="kn">import</span> <span class="n">ErrorList</span>
+<span class="kn">from</span> <span class="nn">apps.authentication.models</span> <span class="kn">import</span> <span class="n">Register</span>
+<span class="n">NULL</span><span class="o">=</span><span class="p">{}</span>
+
+<div class="viewcode-block" id="getUser"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.getUser">[документация]</a><span class="k">def</span> <span class="nf">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция получает пользователя, соответствующего идентификатору пользователя в сессии.</span>
+
+<span class="sd">        :param request: HttpRequest-запрос, который содержит идентификатор пользователя в сессии.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Объект пользователя Register, соответствующий идентификатору в сессии.</span>
+<span class="sd">        :rtype: Register</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">user</span></div>
+    
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.index">[документация]</a><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция отображения домашней страницы приложения.</span>
+
+<span class="sd">        :param request: HttpRequest-запрос.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Ответ HttpResponse, отображающий домашнюю страницу приложения.</span>
+<span class="sd">        :rtype: HttpResponse</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        
+    <span class="n">highest_rated_projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+       <span class="n">avg_rate</span><span class="o">=</span><span class="n">Avg</span><span class="p">(</span><span class="s1">&#39;rate__rate&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-avg_rate&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">last_5_projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-id&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">featured_projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_featured</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+
+    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">highest_rated_projects</span><span class="p">:</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;highest_rated_projects&#39;</span><span class="p">:</span><span class="n">highest_rated_projects</span><span class="p">,</span>
+        <span class="s1">&#39;latest_5_projects&#39;</span><span class="p">:</span> <span class="n">last_5_projects</span><span class="p">,</span>
+        <span class="s1">&#39;featured_projects&#39;</span><span class="p">:</span> <span class="n">featured_projects</span><span class="p">,</span>
+        <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span>
+        <span class="s1">&#39;projects_count&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()),</span>
+        <span class="s1">&#39;donors_count&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">Donation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()),</span>
+        <span class="s1">&#39;reviews_count&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">Rate</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()),</span>
+        <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user</span>
+    <span class="p">}</span>
+    
+    <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/index.html&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="create_new_project"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.create_new_project">[документация]</a><span class="k">def</span> <span class="nf">create_new_project</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция создания нового проекта.</span>
+
+<span class="sd">        :param request: HttpRequest-запрос.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :return: Ответ HttpResponse, отображающий страницу создания нового проекта.</span>
+<span class="sd">        :rtype: HttpResponse</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">my_images</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+
+            <span class="n">form</span> <span class="o">=</span> <span class="n">Project_Form</span><span class="p">()</span>
+           
+            
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/create-project.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">my_images</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span><span class="n">user</span><span class="p">})</span>
+
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">tag_error</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+                    
+            <span class="k">if</span> <span class="s2">&quot;tag&quot;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;newTag&#39;</span><span class="p">]</span><span class="o">!=</span><span class="s2">&quot;&quot;</span><span class="p">:</span>
+                
+                <span class="k">if</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;newTag&#39;</span><span class="p">]</span><span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+
+                    <span class="n">newTag</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">,</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;newTag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                    <span class="n">new_tag</span><span class="o">=</span><span class="n">Tag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">newTag</span><span class="p">)</span><span class="o">.</span><span class="n">id</span>
+                    <span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                    <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+	                <span class="s2">&quot;tag&quot;</span><span class="p">:</span><span class="n">new_tag</span>
+                    <span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tag_error</span><span class="o">=</span><span class="s2">&quot;Please add tag&quot;</span>
+            
+                    
+            <span class="n">form</span> <span class="o">=</span> <span class="n">Project_Form</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tag_error</span><span class="o">!=</span><span class="s2">&quot;&quot;</span><span class="p">:</span>
+                
+               <span class="n">form</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;tag&#39;</span><span class="p">,</span><span class="n">tag_error</span><span class="p">)</span>
+               
+            <span class="n">images</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">project</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">project</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+                <span class="n">project</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">save_m2m</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+                    <span class="n">Image</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">images</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">Project_Form</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/create-project.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span><span class="n">user</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="show_project_details"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.show_project_details">[документация]</a><span class="k">def</span> <span class="nf">show_project_details</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Отображает страницу с подробной информацией о проекте.</span>
+
+<span class="sd">        :param request: объект запроса Django.</span>
+<span class="sd">        :type request: HttpRequest.</span>
+<span class="sd">        :param project_id: идентификатор проекта.</span>
+<span class="sd">        :type project_id: int.</span>
+<span class="sd">        :return: ответ на запрос с использованием шаблона `project-details.html` и переданным контекстом.</span>
+<span class="sd">        :rtype: HttpResponse.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+        <span class="n">donate</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="s2">&quot;donation&quot;</span><span class="p">))</span>
+        <span class="n">donations_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">comment_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="n">replies</span> <span class="o">=</span> <span class="n">Reply</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="n">project_images</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="n">counter</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">project_images</span><span class="p">:</span>
+            <span class="n">counter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+        <span class="n">counter</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="n">related_projects_tags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+            <span class="n">related_projects_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">project_set</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+
+        <span class="n">related_projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">related_projects_tags</span><span class="p">)[:</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">related_projects_images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">related_project</span> <span class="ow">in</span> <span class="n">related_projects</span><span class="p">:</span>
+            <span class="n">related_projects_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">related_project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+
+        <span class="n">myFormat</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">myFormat</span><span class="p">),</span> <span class="n">myFormat</span><span class="p">)</span>
+        <span class="n">end_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">myFormat</span><span class="p">),</span> <span class="n">myFormat</span><span class="p">)</span>
+        <span class="n">days_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_date</span><span class="o">-</span><span class="n">today</span><span class="p">)</span><span class="o">.</span><span class="n">days</span>
+        
+        <span class="n">new_report_form</span> <span class="o">=</span> <span class="n">Report_form</span><span class="p">()</span>
+        <span class="n">reply</span> <span class="o">=</span> <span class="n">Reply_form</span><span class="p">()</span>
+
+        <span class="n">donation_average</span> <span class="o">=</span> <span class="p">(</span><span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">total_target</span>
+        <span class="n">average_rating</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">rate_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Avg</span><span class="p">(</span><span class="s1">&#39;rate&#39;</span><span class="p">))[</span><span class="s1">&#39;rate__avg&#39;</span><span class="p">]</span>
+
+        <span class="c1"># return user rating if found</span>
+        <span class="n">user_rating</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+            <span class="c1"># prev_rating = Project.rate_set.get(user_id=user.id)</span>
+            <span class="n">prev_rating</span><span class="o">=</span><span class="p">[]</span>
+
+            <span class="k">if</span> <span class="n">prev_rating</span><span class="p">:</span>
+                <span class="n">user_rating</span> <span class="o">=</span> <span class="n">prev_rating</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rate</span>
+
+        <span class="k">if</span> <span class="n">average_rating</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">average_rating</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;project&#39;</span><span class="p">:</span> <span class="n">project</span><span class="p">,</span>
+            <span class="s1">&#39;donation&#39;</span><span class="p">:</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;donations&#39;</span><span class="p">:</span> <span class="n">donations_count</span><span class="p">,</span>
+            <span class="s1">&#39;days&#39;</span><span class="p">:</span> <span class="n">days_diff</span><span class="p">,</span>
+            <span class="s1">&#39;comments&#39;</span><span class="p">:</span> <span class="n">comments</span><span class="p">,</span>
+            <span class="s1">&#39;project_images&#39;</span><span class="p">:</span> <span class="n">project_images</span><span class="p">,</span>
+            <span class="s1">&#39;replies&#39;</span><span class="p">:</span> <span class="n">replies</span><span class="p">,</span>
+            <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">tags</span><span class="p">,</span>
+
+            <span class="s1">&#39;report_form&#39;</span><span class="p">:</span> <span class="n">new_report_form</span><span class="p">,</span>
+            <span class="s1">&#39;reply_form&#39;</span><span class="p">:</span> <span class="n">reply</span><span class="p">,</span>
+            <span class="s1">&#39;related_projects&#39;</span><span class="p">:</span> <span class="n">related_projects</span><span class="p">,</span>
+            <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">related_projects_images</span><span class="p">,</span>
+            
+            <span class="s1">&#39;check_target&#39;</span><span class="p">:</span> <span class="n">project</span><span class="o">.</span><span class="n">total_target</span><span class="o">*</span><span class="mf">.25</span><span class="p">,</span>
+            <span class="s1">&#39;donation_average&#39;</span><span class="p">:</span> <span class="n">donation_average</span><span class="p">,</span>
+
+            <span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="n">average_rating</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span>
+            <span class="s1">&#39;user_rating&#39;</span><span class="p">:</span> <span class="n">user_rating</span><span class="p">,</span>
+            <span class="s1">&#39;rating_range&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;average_rating&#39;</span><span class="p">:</span> <span class="n">average_rating</span><span class="p">,</span>
+            
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span><span class="n">user</span><span class="p">,</span>
+            <span class="s1">&#39;counter&#39;</span><span class="p">:</span><span class="n">counter</span>
+            <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/project-details.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Project</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/page-404.html&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+ 
+
+<div class="viewcode-block" id="get_tag_projects"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.get_tag_projects">[документация]</a><span class="k">def</span> <span class="nf">get_tag_projects</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">tag_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает страницу со списком проектов, связанных с указанным тегом.</span>
+
+<span class="sd">        :param request: запрос</span>
+<span class="sd">        :param tag_id: идентификатор тега</span>
+<span class="sd">        :return: страница со списком проектов</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">Tag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">tag_id</span><span class="p">)</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">project_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="n">donations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">progress_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+            <span class="n">donate</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="s2">&quot;donation&quot;</span><span class="p">))</span>
+            <span class="n">total_donation</span> <span class="o">=</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+            
+            <span class="n">progress_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">total_target</span><span class="p">)</span>
+            <span class="n">donations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span><span class="p">)</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
+            <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span>
+            <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span>
+            <span class="s1">&#39;donations&#39;</span><span class="p">:</span> <span class="n">donations</span><span class="p">,</span>
+            <span class="s1">&#39;progress_values&#39;</span><span class="p">:</span> <span class="n">progress_values</span><span class="p">,</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span><span class="n">user</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/tag-projects.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Project</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/page-404.html&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_category_projects"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.get_category_projects">[документация]</a><span class="k">def</span> <span class="nf">get_category_projects</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">category_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает страницу со списком проектов, связанных с указанной категорией.</span>
+
+<span class="sd">        :param request: запрос</span>
+<span class="sd">        :param category_id: идентификатор категории</span>
+<span class="sd">        :return: страница со списком проектов</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="n">donations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">progress_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+            <span class="n">donate</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="s2">&quot;donation&quot;</span><span class="p">))</span>
+            <span class="n">total_donation</span> <span class="o">=</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">progress_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">total_target</span><span class="p">)</span>
+
+            <span class="n">donations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span><span class="p">)</span>
+
+            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="n">title</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">category_id</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
+            <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span>
+            <span class="s1">&#39;donations&#39;</span><span class="p">:</span> <span class="n">donations</span><span class="p">,</span>
+            <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span>
+            <span class="s1">&#39;progress_values&#39;</span><span class="p">:</span> <span class="n">progress_values</span><span class="p">,</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span><span class="n">user</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/category.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Project</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/page-404.html&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="all_projects"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.all_projects">[документация]</a><span class="k">def</span> <span class="nf">all_projects</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает страницу со списком всех проектов.</span>
+
+<span class="sd">        :param request: запрос</span>
+<span class="sd">        :return: страница со списком всех проектов</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="n">donations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">progress_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+            <span class="n">donate</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="s2">&quot;donation&quot;</span><span class="p">))</span>
+            <span class="n">total_donation</span> <span class="o">=</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">progress_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">total_target</span><span class="p">)</span>
+            <span class="n">donations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span><span class="p">)</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span>
+            <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;All Projects&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;donations&#39;</span><span class="p">:</span> <span class="n">donations</span><span class="p">,</span>
+            <span class="s1">&#39;progress_values&#39;</span><span class="p">:</span> <span class="n">progress_values</span><span class="p">,</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span><span class="n">user</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/all_projects.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Project</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/page-404.html&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_featured_projects"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.get_featured_projects">[документация]</a><span class="k">def</span> <span class="nf">get_featured_projects</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает список проектов, отмеченных как &quot;Featured Projects&quot;.</span>
+
+<span class="sd">        :param request: объект запроса Django</span>
+<span class="sd">        :return: возвращает объект ответа Django с отображением всех проектов.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_featured</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="n">donations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">progress_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+            <span class="n">donate</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="s2">&quot;donation&quot;</span><span class="p">))</span>
+            <span class="n">total_donation</span> <span class="o">=</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">progress_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">total_target</span><span class="p">)</span>
+            <span class="n">donations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span><span class="p">)</span>
+            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span>
+            <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Featured Projects&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;donations&#39;</span><span class="p">:</span> <span class="n">donations</span><span class="p">,</span>
+            <span class="s1">&#39;progress_values&#39;</span><span class="p">:</span> <span class="n">progress_values</span><span class="p">,</span>
+            <span class="s1">&#39;user&#39;</span><span class="p">:</span><span class="n">user</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/all_projects.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Project</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/page-404.html&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="donate"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.donate">[документация]</a><span class="k">def</span> <span class="nf">donate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обрабатывает POST запрос на странице проекта и создает запись о пожертвовании в базе данных.</span>
+
+<span class="sd">        :param request: объект запроса Django</span>
+<span class="sd">        :param project_id: идентификатор проекта, на который происходит пожертвование</span>
+<span class="sd">        :return: возвращает объект ответа Django с отображением страницы проекта.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;donate&#39;</span><span class="p">]:</span>
+                <span class="n">donation</span> <span class="o">=</span> <span class="n">Donation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                    <span class="n">donation</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;donate&#39;</span><span class="p">],</span>
+                    <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
+                    <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;show_project&#39;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/project-details.html&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span><span class="n">user</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="create_comment"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.create_comment">[документация]</a><span class="k">def</span> <span class="nf">create_comment</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обрабатывает POST запрос на странице проекта и создает запись о комментарии в базе данных.</span>
+
+<span class="sd">        :param request: объект запроса Django</span>
+<span class="sd">        :param project_id: идентификатор проекта, к которому добавляется комментарий</span>
+<span class="sd">        :return: возвращает объект ответа Django с отображением страницы проекта.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">]:</span>
+                <span class="n">comment</span> <span class="o">=</span> <span class="n">Comment</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                    <span class="n">comment</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">],</span>
+                    <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
+                    <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;show_project&#39;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/project-details.html&quot;</span><span class="p">,</span> <span class="n">project_id</span> <span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span><span class="n">user</span><span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="add_report"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.add_report">[документация]</a><span class="k">def</span> <span class="nf">add_report</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Добавляет жалобу на проект.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">        - request: объект запроса</span>
+<span class="sd">        - project_id: идентификатор проекта</span>
+
+<span class="sd">        Возвращает:</span>
+<span class="sd">        - если пользователь не аутентифицирован, то функция перенаправляет на страницу входа</span>
+<span class="sd">        - если метод запроса POST, то функция создает объект `Project_Report` с текстом жалобы `&#39;ip&#39;`,</span>
+<span class="sd">        идентификатором проекта `project_id` и идентификатором пользователя, который отправил жалобу `user_id`,</span>
+<span class="sd">        и перенаправляет на страницу проекта</span>
+<span class="sd">        - в противном случае функция просто возвращает страницу проекта без изменений</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">my_project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">Project_Report</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">report</span><span class="o">=</span><span class="s1">&#39;ip&#39;</span><span class="p">,</span>
+                <span class="n">project</span><span class="o">=</span><span class="n">my_project</span><span class="p">,</span>
+                <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;show_project&#39;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_comment_report"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.add_comment_report">[документация]</a><span class="k">def</span> <span class="nf">add_comment_report</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">comment_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Добавляет жалобу на комментарий, связанный с проектом.</span>
+
+<span class="sd">        :param request: объект запроса</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :param comment_id: идентификатор комментария</span>
+<span class="sd">        :type comment_id: int</span>
+<span class="sd">        :return: перенаправление на страницу проекта</span>
+<span class="sd">        :rtype: HttpResponseRedirect</span>
+<span class="sd">        :raises: Redirect на страницу входа, если пользователь не авторизован</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">my_comment</span> <span class="o">=</span> <span class="n">Comment</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">comment_id</span><span class="p">)</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">comment__id</span><span class="o">=</span><span class="n">comment_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">Comment_Report</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">report</span><span class="o">=</span><span class="s1">&#39;ip&#39;</span><span class="p">,</span>
+                <span class="n">comment</span><span class="o">=</span><span class="n">my_comment</span><span class="p">,</span>
+                <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;show_project&#39;</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_comment_reply"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.create_comment_reply">[документация]</a><span class="k">def</span> <span class="nf">create_comment_reply</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">comment_id</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       Создает ответ на комментарий и перенаправляет пользователя на страницу проекта, к которому относится комментарий.</span>
+
+<span class="sd">       :param request: HttpRequest объект, содержащий информацию о запросе пользователя.</span>
+<span class="sd">       :param comment_id: Идентификатор комментария, на который необходимо создать ответ.</span>
+<span class="sd">       :param project: Объект модели Project, к которому относится комментарий (опционально, по умолчанию None).</span>
+<span class="sd">       :return: HttpResponse объект, представляющий перенаправление на страницу проекта или страницу входа в систему.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;reply&#39;</span><span class="p">]:</span>
+                <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">comment__id</span><span class="o">=</span><span class="n">comment_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">reply</span> <span class="o">=</span> <span class="n">Reply</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                    <span class="n">reply</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;reply&#39;</span><span class="p">],</span>
+                    <span class="n">comment_id</span><span class="o">=</span><span class="n">comment_id</span><span class="p">,</span>
+                    <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;show_project&#39;</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/project-details.html&quot;</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_category"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.add_category">[документация]</a><span class="k">def</span> <span class="nf">add_category</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Создает новую категорию в базе данных при отправке формы со страницы создания категории.</span>
+
+
+<span class="sd">        :param request: объект запроса</span>
+<span class="sd">        :return: HttpResponseRedirect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">Category_form</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/category_form.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">Category_form</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">new_category</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">category</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">new_category</span><span class="p">:</span>
+
+                        <span class="n">error</span> <span class="o">=</span> <span class="s1">&#39; not valid&#39;</span>
+
+                        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/category_form.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">,</span> <span class="s1">&#39;form_error&#39;</span><span class="p">:</span> <span class="n">error</span><span class="p">})</span>
+
+                <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="search"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.search">[документация]</a><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция выполняет поиск проектов и тегов по заданной строке поиска и возвращает результат в шаблон &quot;search-result.html&quot;.</span>
+
+<span class="sd">        Аргументы:</span>
+<span class="sd">        - `request`: запрос пользователя.</span>
+
+<span class="sd">        Возвращаемое значение:</span>
+<span class="sd">        - Возвращает объект `HttpResponse` с результатом выполнения поиска.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">search_post</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">search_post</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">projects</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">title__icontains</span><span class="o">=</span><span class="n">search_post</span><span class="p">)</span>
+            <span class="n">searched_tags</span> <span class="o">=</span> <span class="n">Tag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__icontains</span><span class="o">=</span><span class="n">search_post</span><span class="p">)</span>
+
+            <span class="n">donations</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">progress_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+                <span class="n">donate</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="s2">&quot;donation&quot;</span><span class="p">))</span>
+                <span class="n">total_donation</span> <span class="o">=</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+
+                <span class="n">progress_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">total_donation</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">project</span><span class="o">.</span><span class="n">total_target</span><span class="p">)</span>
+                <span class="n">donations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_donation</span><span class="p">)</span>
+                <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;projects&#39;</span><span class="p">:</span> <span class="n">projects</span><span class="p">,</span> 
+                <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">searched_tags</span><span class="p">,</span> 
+                <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="n">images</span><span class="p">,</span>
+                <span class="s1">&#39;donations&#39;</span><span class="p">:</span> <span class="n">donations</span><span class="p">,</span>
+                <span class="s1">&#39;progress_values&#39;</span><span class="p">:</span> <span class="n">progress_values</span><span class="p">,</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span><span class="n">user</span><span class="p">}</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">projects</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;No Projects Found for &quot;&#39;</span><span class="o">+</span><span class="n">search_post</span><span class="o">+</span><span class="s1">&#39;&quot;&#39;</span><span class="p">})</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">searched_tags</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s1">&#39;title_tags&#39;</span><span class="p">:</span> <span class="s1">&#39;No Tags Found for &quot;&#39;</span><span class="o">+</span><span class="n">search_post</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">})</span>
+
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/search-result.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;home/index.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">Project</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/page-404.html&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="rate"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.rate">[документация]</a><span class="k">def</span> <span class="nf">rate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Обрабатывает оценку проекта.</span>
+
+<span class="sd">        :param request: объект запроса</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :param project_id: идентификатор проекта</span>
+<span class="sd">        :type project_id: int</span>
+<span class="sd">        :return: перенаправление на страницу проекта</span>
+<span class="sd">        :rtype: HttpResponseRedirect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">project</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="n">project</span><span class="p">}</span>
+
+            <span class="n">rate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rate&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">rate</span> <span class="ow">and</span> <span class="n">rate</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+
+                <span class="n">apply_rating</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;show_project&#39;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="apply_rating"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.apply_rating">[документация]</a><span class="k">def</span> <span class="nf">apply_rating</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">rating</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Функция проверяет, ставил ли пользователь ранее оценку для данного проекта.</span>
+<span class="sd">    Если да, то функция изменяет значение оценки на новое. Если нет, то создается новая оценка.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">    ---------</span>
+<span class="sd">    project - объект проекта, для которого ставится оценка</span>
+<span class="sd">    user - объект пользователя, который ставит оценку</span>
+<span class="sd">    rating - строковое значение, содержащее оценку, которую пользователь хочет поставить (должно быть числом)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># If User rated the same project before --&gt; change rate value</span>
+    <span class="n">prev_user_rating</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">rate_set</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">prev_user_rating</span><span class="p">:</span>
+        <span class="n">prev_user_rating</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rating</span><span class="p">)</span>
+        <span class="n">prev_user_rating</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="c1"># first time to rate this project</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Rate</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">rating</span><span class="p">,</span> <span class="n">projcet_id</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cancel_project"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.cancel_project">[документация]</a><span class="k">def</span> <span class="nf">cancel_project</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">project_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция отменяет проект по идентификатору.</span>
+
+<span class="sd">        :param request: запрос, который содержит информацию о клиенте и его сессии.</span>
+<span class="sd">        :type request: HttpRequest</span>
+<span class="sd">        :param project_id: идентификатор проекта.</span>
+<span class="sd">        :type project_id: int</span>
+<span class="sd">        :return: перенаправление на страницу профиля пользователя, если отмена прошла успешно,</span>
+<span class="sd">                 или на страницу проекта, если проект не может быть отменен.</span>
+<span class="sd">        :rtype: HttpResponseRedirect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+            <span class="n">project</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+
+            <span class="n">donate</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">donation_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="s2">&quot;donation&quot;</span><span class="p">))</span>
+            <span class="n">donation</span> <span class="o">=</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">donate</span><span class="p">[</span><span class="s2">&quot;donation__sum&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">total_target</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">total_target</span>
+            
+            <span class="k">if</span> <span class="n">donation</span> <span class="o">&lt;</span> <span class="n">total_target</span><span class="o">*</span><span class="mf">.25</span><span class="p">:</span>
+                <span class="n">project</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;profile&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;show_project&#39;</span><span class="p">,</span> <span class="n">project_id</span><span class="p">)</span></div>
+                
+           
+
+<div class="viewcode-block" id="pages"><a class="viewcode-back" href="../../../apps.home.html#apps.home.views.pages">[документация]</a><span class="k">def</span> <span class="nf">pages</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Функция для загрузки страниц сайта на основе запрошенного URL-адреса.</span>
+
+<span class="sd">        :param request: объект HttpRequest, содержащий информацию о запросе.</span>
+<span class="sd">        :return: ответ, содержащий запрошенную страницу.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">NULL</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">getUser</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>     
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span> <span class="p">:</span> 
+        <span class="n">load_template</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">load_template</span> <span class="o">==</span> <span class="s1">&#39;admin&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;admin:index&#39;</span><span class="p">))</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;segment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">load_template</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span>
+
+        <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/&#39;</span> <span class="o">+</span> <span class="n">load_template</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span>
+
+    <span class="k">except</span> <span class="n">template</span><span class="o">.</span><span class="n">TemplateDoesNotExist</span><span class="p">:</span>
+            <span class="n">html_template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;home/page-404.html&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">html_template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2023, Stocksmin.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

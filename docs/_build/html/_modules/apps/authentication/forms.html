@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html  lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>apps.authentication.forms</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/translations.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+  <link rel="search" title="Поиск" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">crowdfundingWebApp</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Быстрый поиск</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Поиск" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../modules.html#crowdfundingwebapp">crowdfundingwebapp</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../apps.html" class="reference internal ">apps package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../core.html" class="reference internal ">core package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../gunicorn-cfg.html" class="reference internal ">gunicorn-cfg module</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../manage.html" class="reference internal ">manage module</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">Код модуля</a> &raquo;</li>
+    
+    <li>apps.authentication.forms</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <h1>Исходный код apps.authentication.forms</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+
+
+<span class="kn">from</span> <span class="nn">distutils.log</span> <span class="kn">import</span> <span class="n">error</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="kn">import</span> <span class="n">RegexValidator</span><span class="p">,</span> <span class="n">FileExtensionValidator</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">URLPattern</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Register</span>
+<span class="kn">from</span> <span class="nn">django.forms.widgets</span> <span class="kn">import</span> <span class="n">NumberInput</span>
+
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">gettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+
+<div class="viewcode-block" id="SignupForm"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.SignupForm">[документация]</a><span class="k">class</span> <span class="nc">SignupForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс формы регистрации пользователя.</span>
+
+
+
+<span class="sd">    Параметры:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    forms.ModelForm</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - first_name: CharField с виджетом TextInput для ввода имени пользователя</span>
+<span class="sd">    - last_name: CharField с виджетом TextInput для ввода фамилии пользователя</span>
+<span class="sd">    - email: EmailField с виджетом EmailInput для ввода электронной почты пользователя</span>
+<span class="sd">    - password: CharField с виджетом PasswordInput для ввода пароля пользователя</span>
+<span class="sd">    - confirmPassword: CharField с виджетом PasswordInput для подтверждения пароля пользователя</span>
+<span class="sd">    - phone: CharField с виджетом TextInput для ввода номера телефона пользователя</span>
+<span class="sd">    - image: ImageField с виджетом FileInput для загрузки профильной фотографии пользователя и валидатором</span>
+<span class="sd">    FileExtensionValidator для проверки на расширение файла &quot;jpg&quot;, &quot;png&quot; или &quot;jpeg&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;First Name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}))</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Last Name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}))</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Required&#39;</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">EmailInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="c1">#TODO:add regex to password</span>
+    <span class="n">confirmPassword</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;confirm password&quot;</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Confirm Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="n">phone</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;phone number&quot;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">RegexValidator</span><span class="p">(</span>
+        <span class="s1">&#39;^01[0125][0-9]</span><span class="si">{8}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Enter a Valid Egyption Phone Number&quot;</span><span class="p">)],</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Phone Number&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}))</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;profile image&quot;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">FileExtensionValidator</span><span class="p">([</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="s1">&#39;jpeg&#39;</span><span class="p">])],</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">FileInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Profile Image&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+
+<div class="viewcode-block" id="SignupForm.clean"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.SignupForm.clean">[документация]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Метод clean класса SignupForm проверяет валидность данных, введенных в форму регистрации. Если данные не</span>
+<span class="sd">        проходят валидацию, то он вызывает исключение forms.ValidationError.</span>
+
+
+
+<span class="sd">        :return: dict: словарь с валидными данными.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="n">valpassword</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
+        <span class="n">valconfirmpassword</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;confirmPassword&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">valpassword</span> <span class="o">!=</span> <span class="n">valconfirmpassword</span><span class="p">:</span>
+            <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;confirmPassword&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;password not match&#39;</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Email exists&quot;</span><span class="p">)</span>
+        <span class="n">phone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;phone&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">phone</span><span class="o">=</span><span class="n">phone</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;phone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;phone exists&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SignupForm.Meta"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.SignupForm.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Класс Meta для определения метаданных формы SignupForm.</span>
+
+<span class="sd">        Атрибуты:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : Register</span>
+<span class="sd">             Модель, с которой связана форма.</span>
+<span class="sd">        fields : tuple</span>
+<span class="sd">            Поля модели, которые должны быть отображены в форме.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Register</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">,</span>  <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmPassword&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LoginForm"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.LoginForm">[документация]</a><span class="k">class</span> <span class="nc">LoginForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Форма аутентификации пользователей.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    email : EmailField</span>
+<span class="sd">        Поле для ввода email адреса пользователя.</span>
+<span class="sd">    password : CharField</span>
+<span class="sd">        Поле для ввода пароля пользователя.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Required&#39;</span><span class="p">,</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">EmailInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span></div>
+
+
+<div class="viewcode-block" id="EditProfileForm"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.EditProfileForm">[документация]</a><span class="k">class</span> <span class="nc">EditProfileForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Форма, используемая для редактирования информации профиля пользователя.</span>
+
+
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">    --------</span>
+<span class="sd">    first_name (CharField): Поле для имени пользователя.</span>
+<span class="sd">    last_name (CharField): Поле для фамилии пользователя.</span>
+<span class="sd">    phone (CharField): Поле для номера телефона пользователя.</span>
+<span class="sd">    image (ImageField): Поле для изображения профиля пользователя.</span>
+<span class="sd">    password (CharField): Поле для пароля пользователя.</span>
+<span class="sd">    confirmPassword (CharField): Поле для подтверждения пароля пользователя.</span>
+<span class="sd">    country (CharField): Поле для страны пользователя.</span>
+<span class="sd">    birthdate (DateField): Поле для даты рождения пользователя.</span>
+<span class="sd">    facebook_profile (URLField): Поле для URL профиля Facebook пользователя.</span>
+
+<span class="sd">    Примечание:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Форма наследуется от forms.ModelForm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;First Name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span><span class="p">,</span>
+      
+        <span class="p">}),</span>
+        <span class="n">min_length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+       
+    <span class="p">)</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Last Name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}),</span>
+        <span class="n">min_length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">phone</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;phone number&quot;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">RegexValidator</span><span class="p">(</span>
+        <span class="s1">&#39;^01[0125][0-9]</span><span class="si">{8}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Enter a Valid Egyption Phone Number&quot;</span><span class="p">)],</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Phone Number&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}))</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;profile image&quot;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">FileExtensionValidator</span><span class="p">([</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="s1">&#39;jpeg&#39;</span><span class="p">])],</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">FileInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Profile Image&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="c1">#TODO:add regex to password</span>
+    <span class="n">confirmPassword</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;confirm password&quot;</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Confirm Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="n">country</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">RegexValidator</span><span class="p">(</span>
+        <span class="s1">&#39;^[A-Za-z]+$&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Enter a Valid Country Name&quot;</span><span class="p">)],</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Country&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}))</span>
+    <span class="n">birthdate</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">NumberInput</span><span class="p">(</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="s1">&#39;BirthDate&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span>
+            <span class="p">}</span>
+        <span class="p">))</span>
+    <span class="n">facebook_profile</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">URLField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="s1">&#39;Please Enter a valid Url&#39;</span><span class="p">},</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">URLInput</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="s1">&#39;Profile Facebook Url&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span>
+            <span class="p">}</span>
+    <span class="p">))</span>
+
+
+<div class="viewcode-block" id="EditProfileForm.clean"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.EditProfileForm.clean">[документация]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Очищает и проверяет данные формы.</span>
+
+
+<span class="sd">        :return: dict: Словарь очищенных данных.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="n">valpassword</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
+        <span class="n">valconfirmpassword</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;confirmPassword&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">valpassword</span> <span class="o">!=</span> <span class="n">valconfirmpassword</span><span class="p">:</span>
+            <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;confirmPassword&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;password not match&#39;</span><span class="p">)</span>  
+        <span class="n">phone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;phone&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Register</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">phone</span><span class="o">=</span><span class="n">phone</span><span class="p">)</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;phone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;phone exists&quot;</span><span class="p">)</span>
+     
+   
+        <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EditProfileForm.Meta"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.EditProfileForm.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Определяет метаданные модели Register, используемые формой EditProfileForm.</span>
+
+<span class="sd">        Атрибуты:</span>
+<span class="sd">            model (Register): Модель, используемая формой.</span>
+<span class="sd">            fields (tuple): Кортеж полей формы, которые будут отображаться в шаблоне.</span>
+
+<span class="sd">        Примечание:</span>
+<span class="sd">            Класс Meta используется для определения метаданных формы и является вложенным в класс EditProfileForm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Register</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">,</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span><span class="s1">&#39;phone&#39;</span><span class="p">,</span><span class="s1">&#39;image&#39;</span><span class="p">,</span><span class="s1">&#39;country&#39;</span> <span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmPassword&#39;</span><span class="p">,</span><span class="s1">&#39;birthdate&#39;</span><span class="p">,</span><span class="s1">&#39;facebook_profile&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ResetPasswordEmailForm"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.ResetPasswordEmailForm">[документация]</a><span class="k">class</span> <span class="nc">ResetPasswordEmailForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Форма для восстановления пароля.</span>
+
+<span class="sd">        Атрибуты:</span>
+<span class="sd">            email (EmailField): Поле для ввода электронной почты пользователя.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Required&#39;</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">EmailInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span></div>
+
+<div class="viewcode-block" id="ResetPasswordForm"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.ResetPasswordForm">[документация]</a><span class="k">class</span> <span class="nc">ResetPasswordForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс ResetPasswordForm используется для создания формы сброса пароля.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        password (CharField): Поле для ввода пароля пользователя.</span>
+<span class="sd">        confirmPassword (CharField): Поле для подтверждения введенного пароля.</span>
+
+<span class="sd">    Примечание:</span>
+<span class="sd">        Класс наследуется от forms.ModelForm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+    <span class="c1">#TODO:add regex to password</span>
+    <span class="n">confirmPassword</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;confirm password&quot;</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Confirm Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span>
+<div class="viewcode-block" id="ResetPasswordForm.clean"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.ResetPasswordForm.clean">[документация]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Очищает и проверяет данные формы.</span>
+
+<span class="sd">        :return: dict: Словарь очищенных данных.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">cleaned_data</span><span class="o">=</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="n">valpassword</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
+        <span class="n">valconfirmpassword</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;confirmPassword&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">valpassword</span> <span class="o">!=</span> <span class="n">valconfirmpassword</span><span class="p">:</span>
+             <span class="n">errors</span><span class="p">[</span><span class="s1">&#39;confirmPassword&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="p">(</span><span class="s1">&#39;password not match&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResetPasswordForm.Meta"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.ResetPasswordForm.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Определяет метаданные модели Register, используемые формой EditProfileForm.</span>
+
+<span class="sd">        Атрибуты:</span>
+<span class="sd">            model (Register): Модель, используемая формой.</span>
+<span class="sd">            fields (tuple): Кортеж полей формы, которые будут отображаться в шаблоне.</span>
+
+<span class="sd">        Примечание:</span>
+<span class="sd">            Класс Meta используется для определения метаданных формы и является вложенным в класс EditProfileForm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Register</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmPassword&#39;</span><span class="p">)</span></div></div>
+        
+<div class="viewcode-block" id="DeleteAccountForm"><a class="viewcode-back" href="../../../apps.authentication.html#apps.authentication.forms.DeleteAccountForm">[документация]</a><span class="k">class</span> <span class="nc">DeleteAccountForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Форма для подтверждения удаления учетной записи.</span>
+
+<span class="sd">        Атрибуты:</span>
+<span class="sd">            password (CharField): Поле для ввода пароля пользователя.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">PasswordInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Password&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+    <span class="p">}))</span></div>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2023, Stocksmin.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

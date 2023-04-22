@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html  lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+      <title>apps package</title>
+    
+          <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="_static/theme-vendors.js"></script> -->
+      <script src="_static/theme.js" defer></script>
+    
+  <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+  <link rel="search" title="Поиск" href="search.html" />
+  <link rel="next" title="apps.authentication package" href="apps.authentication.html" />
+  <link rel="prev" title="crowdfundingWebApp" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="index.html" class="home-link">
+    
+      <span class="site-name">crowdfundingWebApp</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Быстрый поиск</span>
+    <div class="searchformwrapper">
+      <form class="search" action="search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Поиск" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="modules.html#crowdfundingwebapp">crowdfundingwebapp</a></span>
+      </p>
+      <ul class="current">
+        
+          <li class="toctree-l1 current">
+            
+              <a href="#" class="reference internal current">apps package</a>
+            
+
+            
+              <ul>
+                
+                  <li class="toctree-l2"><a href="#subpackages" class="reference internal">Subpackages</a></li>
+                
+                  <li class="toctree-l2"><a href="#submodules" class="reference internal">Submodules</a></li>
+                
+                  <li class="toctree-l2"><a href="#module-apps.config" class="reference internal">apps.config module</a></li>
+                
+                  <li class="toctree-l2"><a href="#module-apps.context_processors" class="reference internal">apps.context_processors module</a></li>
+                
+                  <li class="toctree-l2"><a href="#module-apps" class="reference internal">Module contents</a></li>
+                
+              </ul>
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="core.html" class="reference internal ">core package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="gunicorn-cfg.html" class="reference internal ">gunicorn-cfg module</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="manage.html" class="reference internal ">manage module</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">crowdfundingWebApp</a> &raquo;</li>
+    
+    <li>apps package</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="предыдущая глава">← crowdfundingWebApp</a>
+  </li>
+  <li class="next">
+    <a href="apps.authentication.html"
+       title="следующая глава">apps.authentication package →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="apps-package">
+<h1>apps package<a class="headerlink" href="#apps-package" title="Permalink to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apps.authentication.html">apps.authentication package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.migrations.html">apps.authentication.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.migrations.html#module-apps.authentication.migrations.0001_initial">apps.authentication.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.migrations.html#module-apps.authentication.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.admin">apps.authentication.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.config">apps.authentication.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.config.AuthConfig"><code class="docutils literal notranslate"><span class="pre">AuthConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.config.AuthConfig.label"><code class="docutils literal notranslate"><span class="pre">AuthConfig.label</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.config.AuthConfig.name"><code class="docutils literal notranslate"><span class="pre">AuthConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.forms">apps.authentication.forms module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.DeleteAccountForm"><code class="docutils literal notranslate"><span class="pre">DeleteAccountForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.DeleteAccountForm.base_fields"><code class="docutils literal notranslate"><span class="pre">DeleteAccountForm.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.DeleteAccountForm.declared_fields"><code class="docutils literal notranslate"><span class="pre">DeleteAccountForm.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.DeleteAccountForm.media"><code class="docutils literal notranslate"><span class="pre">DeleteAccountForm.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.EditProfileForm"><code class="docutils literal notranslate"><span class="pre">EditProfileForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.EditProfileForm.Meta"><code class="docutils literal notranslate"><span class="pre">EditProfileForm.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.EditProfileForm.base_fields"><code class="docutils literal notranslate"><span class="pre">EditProfileForm.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.EditProfileForm.clean"><code class="docutils literal notranslate"><span class="pre">EditProfileForm.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.EditProfileForm.declared_fields"><code class="docutils literal notranslate"><span class="pre">EditProfileForm.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.EditProfileForm.media"><code class="docutils literal notranslate"><span class="pre">EditProfileForm.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.LoginForm"><code class="docutils literal notranslate"><span class="pre">LoginForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.LoginForm.base_fields"><code class="docutils literal notranslate"><span class="pre">LoginForm.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.LoginForm.declared_fields"><code class="docutils literal notranslate"><span class="pre">LoginForm.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.LoginForm.media"><code class="docutils literal notranslate"><span class="pre">LoginForm.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordEmailForm"><code class="docutils literal notranslate"><span class="pre">ResetPasswordEmailForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordEmailForm.base_fields"><code class="docutils literal notranslate"><span class="pre">ResetPasswordEmailForm.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordEmailForm.declared_fields"><code class="docutils literal notranslate"><span class="pre">ResetPasswordEmailForm.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordEmailForm.media"><code class="docutils literal notranslate"><span class="pre">ResetPasswordEmailForm.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordForm"><code class="docutils literal notranslate"><span class="pre">ResetPasswordForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordForm.Meta"><code class="docutils literal notranslate"><span class="pre">ResetPasswordForm.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordForm.base_fields"><code class="docutils literal notranslate"><span class="pre">ResetPasswordForm.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordForm.clean"><code class="docutils literal notranslate"><span class="pre">ResetPasswordForm.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordForm.declared_fields"><code class="docutils literal notranslate"><span class="pre">ResetPasswordForm.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.ResetPasswordForm.media"><code class="docutils literal notranslate"><span class="pre">ResetPasswordForm.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.SignupForm"><code class="docutils literal notranslate"><span class="pre">SignupForm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.SignupForm.Meta"><code class="docutils literal notranslate"><span class="pre">SignupForm.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.SignupForm.base_fields"><code class="docutils literal notranslate"><span class="pre">SignupForm.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.SignupForm.clean"><code class="docutils literal notranslate"><span class="pre">SignupForm.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.SignupForm.declared_fields"><code class="docutils literal notranslate"><span class="pre">SignupForm.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.forms.SignupForm.media"><code class="docutils literal notranslate"><span class="pre">SignupForm.media</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.models">apps.authentication.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register"><code class="docutils literal notranslate"><span class="pre">Register</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Register.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Register.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.birthdate"><code class="docutils literal notranslate"><span class="pre">Register.birthdate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.comment_report_set"><code class="docutils literal notranslate"><span class="pre">Register.comment_report_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.comment_set"><code class="docutils literal notranslate"><span class="pre">Register.comment_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.country"><code class="docutils literal notranslate"><span class="pre">Register.country</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.donation_set"><code class="docutils literal notranslate"><span class="pre">Register.donation_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.email"><code class="docutils literal notranslate"><span class="pre">Register.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.facebook_profile"><code class="docutils literal notranslate"><span class="pre">Register.facebook_profile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.first_name"><code class="docutils literal notranslate"><span class="pre">Register.first_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.id"><code class="docutils literal notranslate"><span class="pre">Register.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.is_active"><code class="docutils literal notranslate"><span class="pre">Register.is_active</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.is_superuser"><code class="docutils literal notranslate"><span class="pre">Register.is_superuser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.last_login"><code class="docutils literal notranslate"><span class="pre">Register.last_login</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.last_name"><code class="docutils literal notranslate"><span class="pre">Register.last_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.objects"><code class="docutils literal notranslate"><span class="pre">Register.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.password"><code class="docutils literal notranslate"><span class="pre">Register.password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.phone"><code class="docutils literal notranslate"><span class="pre">Register.phone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.profile_img"><code class="docutils literal notranslate"><span class="pre">Register.profile_img</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.project_report_set"><code class="docutils literal notranslate"><span class="pre">Register.project_report_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.project_set"><code class="docutils literal notranslate"><span class="pre">Register.project_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.rate_set"><code class="docutils literal notranslate"><span class="pre">Register.rate_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.Register.reply_set"><code class="docutils literal notranslate"><span class="pre">Register.reply_set</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.models.create_profile"><code class="docutils literal notranslate"><span class="pre">create_profile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.tests">apps.authentication.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.tokens">apps.authentication.tokens module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.tokens.TokenGenerator"><code class="docutils literal notranslate"><span class="pre">TokenGenerator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.urls">apps.authentication.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication.views">apps.authentication.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.EditProfile"><code class="docutils literal notranslate"><span class="pre">EditProfile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.ResetPassword"><code class="docutils literal notranslate"><span class="pre">ResetPassword()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.ResetPasswordLink"><code class="docutils literal notranslate"><span class="pre">ResetPasswordLink()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.activate"><code class="docutils literal notranslate"><span class="pre">activate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.deleteAccount"><code class="docutils literal notranslate"><span class="pre">deleteAccount()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.emailPasswordReset"><code class="docutils literal notranslate"><span class="pre">emailPasswordReset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.profile"><code class="docutils literal notranslate"><span class="pre">profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.signup"><code class="docutils literal notranslate"><span class="pre">signup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.user_login"><code class="docutils literal notranslate"><span class="pre">user_login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.html#apps.authentication.views.user_logout"><code class="docutils literal notranslate"><span class="pre">user_logout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.html#module-apps.authentication">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="apps.home.html">apps.home package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.migrations.html">apps.home.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.migrations.html#module-apps.home.migrations.0001_initial">apps.home.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.migrations.html#module-apps.home.migrations.0002_auto_20230402_2205">apps.home.migrations.0002_auto_20230402_2205 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.migrations.html#module-apps.home.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home.admin">apps.home.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home.config">apps.home.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.config.MyConfig"><code class="docutils literal notranslate"><span class="pre">MyConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.config.MyConfig.label"><code class="docutils literal notranslate"><span class="pre">MyConfig.label</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.config.MyConfig.name"><code class="docutils literal notranslate"><span class="pre">MyConfig.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home.forms">apps.home.forms module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.forms.Category_form"><code class="docutils literal notranslate"><span class="pre">Category_form</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Category_form.Meta"><code class="docutils literal notranslate"><span class="pre">Category_form.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Category_form.base_fields"><code class="docutils literal notranslate"><span class="pre">Category_form.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Category_form.declared_fields"><code class="docutils literal notranslate"><span class="pre">Category_form.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Category_form.media"><code class="docutils literal notranslate"><span class="pre">Category_form.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.forms.Comment_report_form"><code class="docutils literal notranslate"><span class="pre">Comment_report_form</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Comment_report_form.Meta"><code class="docutils literal notranslate"><span class="pre">Comment_report_form.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Comment_report_form.base_fields"><code class="docutils literal notranslate"><span class="pre">Comment_report_form.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Comment_report_form.declared_fields"><code class="docutils literal notranslate"><span class="pre">Comment_report_form.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Comment_report_form.media"><code class="docutils literal notranslate"><span class="pre">Comment_report_form.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.forms.Project_Form"><code class="docutils literal notranslate"><span class="pre">Project_Form</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Project_Form.Meta"><code class="docutils literal notranslate"><span class="pre">Project_Form.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Project_Form.base_fields"><code class="docutils literal notranslate"><span class="pre">Project_Form.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Project_Form.clean"><code class="docutils literal notranslate"><span class="pre">Project_Form.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Project_Form.declared_fields"><code class="docutils literal notranslate"><span class="pre">Project_Form.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Project_Form.media"><code class="docutils literal notranslate"><span class="pre">Project_Form.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.forms.Reply_form"><code class="docutils literal notranslate"><span class="pre">Reply_form</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Reply_form.Meta"><code class="docutils literal notranslate"><span class="pre">Reply_form.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Reply_form.base_fields"><code class="docutils literal notranslate"><span class="pre">Reply_form.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Reply_form.declared_fields"><code class="docutils literal notranslate"><span class="pre">Reply_form.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Reply_form.media"><code class="docutils literal notranslate"><span class="pre">Reply_form.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.forms.Report_form"><code class="docutils literal notranslate"><span class="pre">Report_form</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Report_form.Meta"><code class="docutils literal notranslate"><span class="pre">Report_form.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Report_form.base_fields"><code class="docutils literal notranslate"><span class="pre">Report_form.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Report_form.declared_fields"><code class="docutils literal notranslate"><span class="pre">Report_form.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.forms.Report_form.media"><code class="docutils literal notranslate"><span class="pre">Report_form.media</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home.models">apps.home.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Category"><code class="docutils literal notranslate"><span class="pre">Category</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Category.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Category.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Category.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Category.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Category.id"><code class="docutils literal notranslate"><span class="pre">Category.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Category.name"><code class="docutils literal notranslate"><span class="pre">Category.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Category.objects"><code class="docutils literal notranslate"><span class="pre">Category.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Category.project_set"><code class="docutils literal notranslate"><span class="pre">Category.project_set</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Comment"><code class="docutils literal notranslate"><span class="pre">Comment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Comment.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Comment.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.comment"><code class="docutils literal notranslate"><span class="pre">Comment.comment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.comment_report_set"><code class="docutils literal notranslate"><span class="pre">Comment.comment_report_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.created_at"><code class="docutils literal notranslate"><span class="pre">Comment.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Comment.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Comment.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.id"><code class="docutils literal notranslate"><span class="pre">Comment.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.objects"><code class="docutils literal notranslate"><span class="pre">Comment.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.project"><code class="docutils literal notranslate"><span class="pre">Comment.project</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.project_id"><code class="docutils literal notranslate"><span class="pre">Comment.project_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.reply_set"><code class="docutils literal notranslate"><span class="pre">Comment.reply_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.user"><code class="docutils literal notranslate"><span class="pre">Comment.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment.user_id"><code class="docutils literal notranslate"><span class="pre">Comment.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report"><code class="docutils literal notranslate"><span class="pre">Comment_Report</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Comment_Report.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Comment_Report.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.REPOT_DATA"><code class="docutils literal notranslate"><span class="pre">Comment_Report.REPOT_DATA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.comment"><code class="docutils literal notranslate"><span class="pre">Comment_Report.comment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.comment_id"><code class="docutils literal notranslate"><span class="pre">Comment_Report.comment_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.get_report_display"><code class="docutils literal notranslate"><span class="pre">Comment_Report.get_report_display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.id"><code class="docutils literal notranslate"><span class="pre">Comment_Report.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.objects"><code class="docutils literal notranslate"><span class="pre">Comment_Report.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.report"><code class="docutils literal notranslate"><span class="pre">Comment_Report.report</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.user"><code class="docutils literal notranslate"><span class="pre">Comment_Report.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Comment_Report.user_id"><code class="docutils literal notranslate"><span class="pre">Comment_Report.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Donation"><code class="docutils literal notranslate"><span class="pre">Donation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Donation.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Donation.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.created_at"><code class="docutils literal notranslate"><span class="pre">Donation.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.donation"><code class="docutils literal notranslate"><span class="pre">Donation.donation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Donation.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Donation.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.id"><code class="docutils literal notranslate"><span class="pre">Donation.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.objects"><code class="docutils literal notranslate"><span class="pre">Donation.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.project"><code class="docutils literal notranslate"><span class="pre">Donation.project</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.project_id"><code class="docutils literal notranslate"><span class="pre">Donation.project_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.user"><code class="docutils literal notranslate"><span class="pre">Donation.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Donation.user_id"><code class="docutils literal notranslate"><span class="pre">Donation.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Image.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Image.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Image.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Image.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Image.id"><code class="docutils literal notranslate"><span class="pre">Image.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Image.images"><code class="docutils literal notranslate"><span class="pre">Image.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Image.objects"><code class="docutils literal notranslate"><span class="pre">Image.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Image.project"><code class="docutils literal notranslate"><span class="pre">Image.project</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Image.project_id"><code class="docutils literal notranslate"><span class="pre">Image.project_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Project"><code class="docutils literal notranslate"><span class="pre">Project</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Project.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Project.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.category"><code class="docutils literal notranslate"><span class="pre">Project.category</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.category_id"><code class="docutils literal notranslate"><span class="pre">Project.category_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.comment_set"><code class="docutils literal notranslate"><span class="pre">Project.comment_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.created_at"><code class="docutils literal notranslate"><span class="pre">Project.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.details"><code class="docutils literal notranslate"><span class="pre">Project.details</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.donation_set"><code class="docutils literal notranslate"><span class="pre">Project.donation_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.end_time"><code class="docutils literal notranslate"><span class="pre">Project.end_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Project.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.get_next_by_end_time"><code class="docutils literal notranslate"><span class="pre">Project.get_next_by_end_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.get_next_by_start_time"><code class="docutils literal notranslate"><span class="pre">Project.get_next_by_start_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Project.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.get_previous_by_end_time"><code class="docutils literal notranslate"><span class="pre">Project.get_previous_by_end_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.get_previous_by_start_time"><code class="docutils literal notranslate"><span class="pre">Project.get_previous_by_start_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.id"><code class="docutils literal notranslate"><span class="pre">Project.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.image_set"><code class="docutils literal notranslate"><span class="pre">Project.image_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.is_featured"><code class="docutils literal notranslate"><span class="pre">Project.is_featured</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.objects"><code class="docutils literal notranslate"><span class="pre">Project.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.project_report_set"><code class="docutils literal notranslate"><span class="pre">Project.project_report_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.rate_set"><code class="docutils literal notranslate"><span class="pre">Project.rate_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.start_time"><code class="docutils literal notranslate"><span class="pre">Project.start_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.tag"><code class="docutils literal notranslate"><span class="pre">Project.tag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.title"><code class="docutils literal notranslate"><span class="pre">Project.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.total_target"><code class="docutils literal notranslate"><span class="pre">Project.total_target</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.user"><code class="docutils literal notranslate"><span class="pre">Project.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project.user_id"><code class="docutils literal notranslate"><span class="pre">Project.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report"><code class="docutils literal notranslate"><span class="pre">Project_Report</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Project_Report.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Project_Report.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.REPOT_DATA"><code class="docutils literal notranslate"><span class="pre">Project_Report.REPOT_DATA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.get_report_display"><code class="docutils literal notranslate"><span class="pre">Project_Report.get_report_display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.id"><code class="docutils literal notranslate"><span class="pre">Project_Report.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.objects"><code class="docutils literal notranslate"><span class="pre">Project_Report.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.project"><code class="docutils literal notranslate"><span class="pre">Project_Report.project</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.project_id"><code class="docutils literal notranslate"><span class="pre">Project_Report.project_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.report"><code class="docutils literal notranslate"><span class="pre">Project_Report.report</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.user"><code class="docutils literal notranslate"><span class="pre">Project_Report.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Project_Report.user_id"><code class="docutils literal notranslate"><span class="pre">Project_Report.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Rate"><code class="docutils literal notranslate"><span class="pre">Rate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Rate.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Rate.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.id"><code class="docutils literal notranslate"><span class="pre">Rate.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.objects"><code class="docutils literal notranslate"><span class="pre">Rate.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.projcet"><code class="docutils literal notranslate"><span class="pre">Rate.projcet</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.projcet_id"><code class="docutils literal notranslate"><span class="pre">Rate.projcet_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.rate"><code class="docutils literal notranslate"><span class="pre">Rate.rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.user"><code class="docutils literal notranslate"><span class="pre">Rate.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Rate.user_id"><code class="docutils literal notranslate"><span class="pre">Rate.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Reply"><code class="docutils literal notranslate"><span class="pre">Reply</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Reply.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Reply.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.comment"><code class="docutils literal notranslate"><span class="pre">Reply.comment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.comment_id"><code class="docutils literal notranslate"><span class="pre">Reply.comment_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.created_at"><code class="docutils literal notranslate"><span class="pre">Reply.created_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.get_next_by_created_at"><code class="docutils literal notranslate"><span class="pre">Reply.get_next_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.get_previous_by_created_at"><code class="docutils literal notranslate"><span class="pre">Reply.get_previous_by_created_at()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.id"><code class="docutils literal notranslate"><span class="pre">Reply.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.objects"><code class="docutils literal notranslate"><span class="pre">Reply.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.reply"><code class="docutils literal notranslate"><span class="pre">Reply.reply</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.user"><code class="docutils literal notranslate"><span class="pre">Reply.user</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Reply.user_id"><code class="docutils literal notranslate"><span class="pre">Reply.user_id</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.models.Tag"><code class="docutils literal notranslate"><span class="pre">Tag</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Tag.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Tag.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Tag.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Tag.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Tag.id"><code class="docutils literal notranslate"><span class="pre">Tag.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Tag.name"><code class="docutils literal notranslate"><span class="pre">Tag.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Tag.objects"><code class="docutils literal notranslate"><span class="pre">Tag.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.home.html#apps.home.models.Tag.project_set"><code class="docutils literal notranslate"><span class="pre">Tag.project_set</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home.tests">apps.home.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home.urls">apps.home.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home.views">apps.home.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.add_category"><code class="docutils literal notranslate"><span class="pre">add_category()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.add_comment_report"><code class="docutils literal notranslate"><span class="pre">add_comment_report()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.add_report"><code class="docutils literal notranslate"><span class="pre">add_report()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.all_projects"><code class="docutils literal notranslate"><span class="pre">all_projects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.apply_rating"><code class="docutils literal notranslate"><span class="pre">apply_rating()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.cancel_project"><code class="docutils literal notranslate"><span class="pre">cancel_project()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.create_comment"><code class="docutils literal notranslate"><span class="pre">create_comment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.create_comment_reply"><code class="docutils literal notranslate"><span class="pre">create_comment_reply()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.create_new_project"><code class="docutils literal notranslate"><span class="pre">create_new_project()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.donate"><code class="docutils literal notranslate"><span class="pre">donate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.getUser"><code class="docutils literal notranslate"><span class="pre">getUser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.get_category_projects"><code class="docutils literal notranslate"><span class="pre">get_category_projects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.get_featured_projects"><code class="docutils literal notranslate"><span class="pre">get_featured_projects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.get_tag_projects"><code class="docutils literal notranslate"><span class="pre">get_tag_projects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.index"><code class="docutils literal notranslate"><span class="pre">index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.pages"><code class="docutils literal notranslate"><span class="pre">pages()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.rate"><code class="docutils literal notranslate"><span class="pre">rate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.search"><code class="docutils literal notranslate"><span class="pre">search()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="apps.home.html#apps.home.views.show_project_details"><code class="docutils literal notranslate"><span class="pre">show_project_details()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.home.html#module-apps.home">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-apps.config">
+<span id="apps-config-module"></span><h2>apps.config module<a class="headerlink" href="#module-apps.config" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.config.AppsConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.config.</span></span><span class="sig-name descname"><span class="pre">AppsConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/config.html#AppsConfig"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.config.AppsConfig" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+</div></blockquote>
+<p>Класс конфигурации приложения Django.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>default_auto_field</strong> (<em>str</em>) – Поле, используемое для автоматического создания первичных ключей.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Имя приложения.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – Ярлык приложения.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.config.AppsConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#apps.config.AppsConfig.default_auto_field" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.config.AppsConfig.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'apps'</span></em><a class="headerlink" href="#apps.config.AppsConfig.label" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.config.AppsConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'apps'</span></em><a class="headerlink" href="#apps.config.AppsConfig.name" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.context_processors">
+<span id="apps-context-processors-module"></span><h2>apps.context_processors module<a class="headerlink" href="#module-apps.context_processors" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.context_processors.show_category">
+<span class="sig-prename descclassname"><span class="pre">apps.context_processors.</span></span><span class="sig-name descname"><span class="pre">show_category</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/context_processors.html#show_category"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.context_processors.show_category" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-apps">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apps" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="предыдущая глава">← crowdfundingWebApp</a>
+  </li>
+  <li class="next">
+    <a href="apps.authentication.html"
+       title="следующая глава">apps.authentication package →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2023, Stocksmin.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

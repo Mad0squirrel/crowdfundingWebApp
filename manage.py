@@ -1,12 +1,17 @@
 #!/usr/bin/env python
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
+
 
 import os
 import sys
 
 def main():
+    """
+        Функция для запуска Django-приложения из командной строки.
+
+        Использует значение переменной окружения 'DJANGO_SETTINGS_MODULE' для установки настроек Django.
+        Если настройки не установлены, используется значение 'core.settings'.
+        Импортирует `execute_from_command_line` из `django.core.management` для запуска командной строки Django.
+    """
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
     try:
         from django.core.management import execute_from_command_line

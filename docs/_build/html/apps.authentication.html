@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html  lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+      <title>apps.authentication package</title>
+    
+          <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="_static/theme-vendors.js"></script> -->
+      <script src="_static/theme.js" defer></script>
+    
+  <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+  <link rel="search" title="Поиск" href="search.html" />
+  <link rel="next" title="apps.authentication.migrations package" href="apps.authentication.migrations.html" />
+  <link rel="prev" title="apps package" href="apps.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="index.html" class="home-link">
+    
+      <span class="site-name">crowdfundingWebApp</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Быстрый поиск</span>
+    <div class="searchformwrapper">
+      <form class="search" action="search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Поиск" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="modules.html#crowdfundingwebapp">crowdfundingwebapp</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="apps.html" class="reference internal ">apps package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="core.html" class="reference internal ">core package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="gunicorn-cfg.html" class="reference internal ">gunicorn-cfg module</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="manage.html" class="reference internal ">manage module</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">crowdfundingWebApp</a> &raquo;</li>
+    
+      <li><a href="apps.html">apps package</a> &raquo;</li>
+    
+    <li>apps.authentication package</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="apps.html"
+       title="предыдущая глава">← apps package</a>
+  </li>
+  <li class="next">
+    <a href="apps.authentication.migrations.html"
+       title="следующая глава">apps.authentication.migrations package →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="apps-authentication-package">
+<h1>apps.authentication package<a class="headerlink" href="#apps-authentication-package" title="Permalink to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apps.authentication.migrations.html">apps.authentication.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.migrations.html#module-apps.authentication.migrations.0001_initial">apps.authentication.migrations.0001_initial module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="apps.authentication.migrations.html#apps.authentication.migrations.0001_initial.Migration"><code class="docutils literal notranslate"><span class="pre">Migration</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.migrations.html#apps.authentication.migrations.0001_initial.Migration.dependencies"><code class="docutils literal notranslate"><span class="pre">Migration.dependencies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.migrations.html#apps.authentication.migrations.0001_initial.Migration.initial"><code class="docutils literal notranslate"><span class="pre">Migration.initial</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="apps.authentication.migrations.html#apps.authentication.migrations.0001_initial.Migration.operations"><code class="docutils literal notranslate"><span class="pre">Migration.operations</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apps.authentication.migrations.html#module-apps.authentication.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-apps.authentication.admin">
+<span id="apps-authentication-admin-module"></span><h2>apps.authentication.admin module<a class="headerlink" href="#module-apps.authentication.admin" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-apps.authentication.config">
+<span id="apps-authentication-config-module"></span><h2>apps.authentication.config module<a class="headerlink" href="#module-apps.authentication.config" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.config.AuthConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.config.</span></span><span class="sig-name descname"><span class="pre">AuthConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/config.html#AuthConfig"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.config.AuthConfig" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+</div></blockquote>
+<p>Класс AuthConfig наследуется от AppConfig из фреймворка Django и используется для конфигурации приложения apps.auth.</p>
+<p>Этот класс используется для определения конфигурации приложения, которое может быть подключено в проект Django,
+и чтобы указать, как именно приложение будет настроено и функционировать в контексте проекта.</p>
+<section id="id1">
+<h3>Параметры:<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>AppConfig<span class="classifier">class</span></dt><dd><p>используется в Django для конфигурирования приложений</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Атрибуты:<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>Полное имя пакета приложения.</p>
+</dd>
+<dt>label<span class="classifier">str</span></dt><dd><p>Метка приложения, используемая в URL-адресах и некоторых других местах.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.config.AuthConfig.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'apps_auth'</span></em><a class="headerlink" href="#apps.authentication.config.AuthConfig.label" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.config.AuthConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'apps.auth'</span></em><a class="headerlink" href="#apps.authentication.config.AuthConfig.name" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-apps.authentication.forms">
+<span id="apps-authentication-forms-module"></span><h2>apps.authentication.forms module<a class="headerlink" href="#module-apps.authentication.forms" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.DeleteAccountForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.forms.</span></span><span class="sig-name descname"><span class="pre">DeleteAccountForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#DeleteAccountForm"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.DeleteAccountForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+</div></blockquote>
+<p>Форма для подтверждения удаления учетной записи.</p>
+<dl class="simple">
+<dt>Атрибуты:</dt><dd><p>password (CharField): Поле для ввода пароля пользователя.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.DeleteAccountForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.DeleteAccountForm.base_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.DeleteAccountForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.DeleteAccountForm.declared_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apps.authentication.forms.DeleteAccountForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#apps.authentication.forms.DeleteAccountForm.media" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.forms.</span></span><span class="sig-name descname"><span class="pre">EditProfileForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#EditProfileForm"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.EditProfileForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+</div></blockquote>
+<p>Форма, используемая для редактирования информации профиля пользователя.</p>
+<section id="id3">
+<h3>Атрибуты:<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>first_name (CharField): Поле для имени пользователя.
+last_name (CharField): Поле для фамилии пользователя.
+phone (CharField): Поле для номера телефона пользователя.
+image (ImageField): Поле для изображения профиля пользователя.
+password (CharField): Поле для пароля пользователя.
+confirmPassword (CharField): Поле для подтверждения пароля пользователя.
+country (CharField): Поле для страны пользователя.
+birthdate (DateField): Поле для даты рождения пользователя.
+facebook_profile (URLField): Поле для URL профиля Facebook пользователя.</p>
+</section>
+<section id="id4">
+<h3>Примечание:<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>Форма наследуется от forms.ModelForm.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/apps/authentication/forms.html#EditProfileForm.Meta"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.EditProfileForm.Meta" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</div></blockquote>
+<p>Определяет метаданные модели Register, используемые формой EditProfileForm.</p>
+<dl class="simple">
+<dt>Атрибуты:</dt><dd><p>model (Register): Модель, используемая формой.
+fields (tuple): Кортеж полей формы, которые будут отображаться в шаблоне.</p>
+</dd>
+<dt>Примечание:</dt><dd><p>Класс Meta используется для определения метаданных формы и является вложенным в класс EditProfileForm.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('first_name',</span> <span class="pre">'last_name',</span> <span class="pre">'phone',</span> <span class="pre">'image',</span> <span class="pre">'country',</span> <span class="pre">'password',</span> <span class="pre">'confirmPassword',</span> <span class="pre">'birthdate',</span> <span class="pre">'facebook_profile')</span></em><a class="headerlink" href="#apps.authentication.forms.EditProfileForm.Meta.fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#apps.authentication.forms.EditProfileForm.Meta.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#apps.authentication.models.Register" title="apps.authentication.models.Register"><code class="xref py py-class docutils literal notranslate"><span class="pre">Register</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'birthdate':</span> <span class="pre">&lt;django.forms.fields.DateField</span> <span class="pre">object&gt;,</span> <span class="pre">'confirmPassword':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'country':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'facebook_profile':</span> <span class="pre">&lt;django.forms.fields.URLField</span> <span class="pre">object&gt;,</span> <span class="pre">'first_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'image':</span> <span class="pre">&lt;django.forms.fields.ImageField</span> <span class="pre">object&gt;,</span> <span class="pre">'last_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.EditProfileForm.base_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#EditProfileForm.clean"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.EditProfileForm.clean" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Очищает и проверяет данные формы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict: Словарь очищенных данных.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'birthdate':</span> <span class="pre">&lt;django.forms.fields.DateField</span> <span class="pre">object&gt;,</span> <span class="pre">'confirmPassword':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'country':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'facebook_profile':</span> <span class="pre">&lt;django.forms.fields.URLField</span> <span class="pre">object&gt;,</span> <span class="pre">'first_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'image':</span> <span class="pre">&lt;django.forms.fields.ImageField</span> <span class="pre">object&gt;,</span> <span class="pre">'last_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.EditProfileForm.declared_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apps.authentication.forms.EditProfileForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#apps.authentication.forms.EditProfileForm.media" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.LoginForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.forms.</span></span><span class="sig-name descname"><span class="pre">LoginForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#LoginForm"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.LoginForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+</div></blockquote>
+<p>Форма аутентификации пользователей.</p>
+<section id="id5">
+<h3>Атрибуты:<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>email<span class="classifier">EmailField</span></dt><dd><p>Поле для ввода email адреса пользователя.</p>
+</dd>
+<dt>password<span class="classifier">CharField</span></dt><dd><p>Поле для ввода пароля пользователя.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.LoginForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.LoginForm.base_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.LoginForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.LoginForm.declared_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apps.authentication.forms.LoginForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#apps.authentication.forms.LoginForm.media" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordEmailForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.forms.</span></span><span class="sig-name descname"><span class="pre">ResetPasswordEmailForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#ResetPasswordEmailForm"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.ResetPasswordEmailForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+</div></blockquote>
+<p>Форма для восстановления пароля.</p>
+<dl class="simple">
+<dt>Атрибуты:</dt><dd><p>email (EmailField): Поле для ввода электронной почты пользователя.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordEmailForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.ResetPasswordEmailForm.base_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordEmailForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.ResetPasswordEmailForm.declared_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordEmailForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#apps.authentication.forms.ResetPasswordEmailForm.media" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.forms.</span></span><span class="sig-name descname"><span class="pre">ResetPasswordForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#ResetPasswordForm"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+</div></blockquote>
+<p>Класс ResetPasswordForm используется для создания формы сброса пароля.</p>
+<dl class="simple">
+<dt>Атрибуты:</dt><dd><p>password (CharField): Поле для ввода пароля пользователя.
+confirmPassword (CharField): Поле для подтверждения введенного пароля.</p>
+</dd>
+<dt>Примечание:</dt><dd><p>Класс наследуется от forms.ModelForm.</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/apps/authentication/forms.html#ResetPasswordForm.Meta"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm.Meta" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</div></blockquote>
+<p>Определяет метаданные модели Register, используемые формой EditProfileForm.</p>
+<dl class="simple">
+<dt>Атрибуты:</dt><dd><p>model (Register): Модель, используемая формой.
+fields (tuple): Кортеж полей формы, которые будут отображаться в шаблоне.</p>
+</dd>
+<dt>Примечание:</dt><dd><p>Класс Meta используется для определения метаданных формы и является вложенным в класс EditProfileForm.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('password',</span> <span class="pre">'confirmPassword')</span></em><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm.Meta.fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm.Meta.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#apps.authentication.models.Register" title="apps.authentication.models.Register"><code class="xref py py-class docutils literal notranslate"><span class="pre">Register</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'confirmPassword':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm.base_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#ResetPasswordForm.clean"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm.clean" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Очищает и проверяет данные формы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict: Словарь очищенных данных.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'confirmPassword':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm.declared_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apps.authentication.forms.ResetPasswordForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#apps.authentication.forms.ResetPasswordForm.media" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.forms.</span></span><span class="sig-name descname"><span class="pre">SignupForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#SignupForm"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.SignupForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+</div></blockquote>
+<p>Класс формы регистрации пользователя.</p>
+<section id="id6">
+<h3>Параметры:<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>forms.ModelForm</p>
+</section>
+<section id="id7">
+<h3>Атрибуты:<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>first_name: CharField с виджетом TextInput для ввода имени пользователя</p></li>
+<li><p>last_name: CharField с виджетом TextInput для ввода фамилии пользователя</p></li>
+<li><p>email: EmailField с виджетом EmailInput для ввода электронной почты пользователя</p></li>
+<li><p>password: CharField с виджетом PasswordInput для ввода пароля пользователя</p></li>
+<li><p>confirmPassword: CharField с виджетом PasswordInput для подтверждения пароля пользователя</p></li>
+<li><p>phone: CharField с виджетом TextInput для ввода номера телефона пользователя</p></li>
+<li><p>image: ImageField с виджетом FileInput для загрузки профильной фотографии пользователя и валидатором</p></li>
+</ul>
+<p>FileExtensionValidator для проверки на расширение файла «jpg», «png» или «jpeg»</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/apps/authentication/forms.html#SignupForm.Meta"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.SignupForm.Meta" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</div></blockquote>
+<p>Класс Meta для определения метаданных формы SignupForm.</p>
+<section id="id8">
+<h4>Атрибуты:<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h4>
+<dl class="simple">
+<dt>model<span class="classifier">Register</span></dt><dd><p>Модель, с которой связана форма.</p>
+</dd>
+<dt>fields<span class="classifier">tuple</span></dt><dd><p>Поля модели, которые должны быть отображены в форме.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('first_name',</span> <span class="pre">'last_name',</span> <span class="pre">'email',</span> <span class="pre">'password',</span> <span class="pre">'confirmPassword',</span> <span class="pre">'phone',</span> <span class="pre">'image')</span></em><a class="headerlink" href="#apps.authentication.forms.SignupForm.Meta.fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#apps.authentication.forms.SignupForm.Meta.model" title="Ссылка на это определение">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#apps.authentication.models.Register" title="apps.authentication.models.Register"><code class="xref py py-class docutils literal notranslate"><span class="pre">Register</span></code></a></p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'confirmPassword':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;,</span> <span class="pre">'first_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'image':</span> <span class="pre">&lt;django.forms.fields.ImageField</span> <span class="pre">object&gt;,</span> <span class="pre">'last_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.SignupForm.base_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/forms.html#SignupForm.clean"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.forms.SignupForm.clean" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Метод clean класса SignupForm проверяет валидность данных, введенных в форму регистрации. Если данные не
+проходят валидацию, то он вызывает исключение forms.ValidationError.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict: словарь с валидными данными.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'confirmPassword':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'email':</span> <span class="pre">&lt;django.forms.fields.EmailField</span> <span class="pre">object&gt;,</span> <span class="pre">'first_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'image':</span> <span class="pre">&lt;django.forms.fields.ImageField</span> <span class="pre">object&gt;,</span> <span class="pre">'last_name':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#apps.authentication.forms.SignupForm.declared_fields" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apps.authentication.forms.SignupForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#apps.authentication.forms.SignupForm.media" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-apps.authentication.models">
+<span id="apps-authentication-models-module"></span><h2>apps.authentication.models module<a class="headerlink" href="#module-apps.authentication.models" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.models.Register">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.models.</span></span><span class="sig-name descname"><span class="pre">Register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/models.html#Register"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.models.Register" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+</div></blockquote>
+<p>Класс для регистрации пользователя.</p>
+<dl class="simple">
+<dt>Атрибуты:</dt><dd><p>first_name (CharField): Поле для имени пользователя.
+last_name (CharField): Поле для фамилии пользователя.
+email (EmailField): Поле для электронной почты пользователя.
+password (CharField): Поле для пароля пользователя.
+phone (CharField): Поле для номера телефона пользователя.
+is_active (BooleanField): Поле, указывающее, активен ли пользователь.
+is_superuser (BooleanField): Поле, указывающее, является ли пользователь суперпользователем.
+profile_img (ImageField): Поле для фотографии профиля пользователя.
+birthdate (DateField): Поле для даты рождения пользователя.
+country (CharField): Поле для страны пользователя.
+last_login (DateTimeField): Поле, указывающее дату последнего входа в систему.</p>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#apps.authentication.models.Register.DoesNotExist" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#apps.authentication.models.Register.MultipleObjectsReturned" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.birthdate">
+<span class="sig-name descname"><span class="pre">birthdate</span></span><a class="headerlink" href="#apps.authentication.models.Register.birthdate" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.comment_report_set">
+<span class="sig-name descname"><span class="pre">comment_report_set</span></span><a class="headerlink" href="#apps.authentication.models.Register.comment_report_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.comment_set">
+<span class="sig-name descname"><span class="pre">comment_set</span></span><a class="headerlink" href="#apps.authentication.models.Register.comment_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.country">
+<span class="sig-name descname"><span class="pre">country</span></span><a class="headerlink" href="#apps.authentication.models.Register.country" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.donation_set">
+<span class="sig-name descname"><span class="pre">donation_set</span></span><a class="headerlink" href="#apps.authentication.models.Register.donation_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.email">
+<span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#apps.authentication.models.Register.email" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.facebook_profile">
+<span class="sig-name descname"><span class="pre">facebook_profile</span></span><a class="headerlink" href="#apps.authentication.models.Register.facebook_profile" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.first_name">
+<span class="sig-name descname"><span class="pre">first_name</span></span><a class="headerlink" href="#apps.authentication.models.Register.first_name" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#apps.authentication.models.Register.id" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><a class="headerlink" href="#apps.authentication.models.Register.is_active" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.is_superuser">
+<span class="sig-name descname"><span class="pre">is_superuser</span></span><a class="headerlink" href="#apps.authentication.models.Register.is_superuser" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.last_login">
+<span class="sig-name descname"><span class="pre">last_login</span></span><a class="headerlink" href="#apps.authentication.models.Register.last_login" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.last_name">
+<span class="sig-name descname"><span class="pre">last_name</span></span><a class="headerlink" href="#apps.authentication.models.Register.last_name" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#apps.authentication.models.Register.objects" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.password">
+<span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#apps.authentication.models.Register.password" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.phone">
+<span class="sig-name descname"><span class="pre">phone</span></span><a class="headerlink" href="#apps.authentication.models.Register.phone" title="Ссылка на это определение">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.profile_img">
+<span class="sig-name descname"><span class="pre">profile_img</span></span><a class="headerlink" href="#apps.authentication.models.Register.profile_img" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Just like the FileDescriptor, but for ImageFields. The only difference is
+assigning the width/height to the width_field/height_field, if appropriate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.project_report_set">
+<span class="sig-name descname"><span class="pre">project_report_set</span></span><a class="headerlink" href="#apps.authentication.models.Register.project_report_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.project_set">
+<span class="sig-name descname"><span class="pre">project_set</span></span><a class="headerlink" href="#apps.authentication.models.Register.project_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.rate_set">
+<span class="sig-name descname"><span class="pre">rate_set</span></span><a class="headerlink" href="#apps.authentication.models.Register.rate_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.authentication.models.Register.reply_set">
+<span class="sig-name descname"><span class="pre">reply_set</span></span><a class="headerlink" href="#apps.authentication.models.Register.reply_set" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.models.create_profile">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.models.</span></span><span class="sig-name descname"><span class="pre">create_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/models.html#create_profile"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.models.create_profile" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Создает экземпляр профиля <cite>Register</cite> при создании нового пользователя <cite>User</cite>.</p>
+<dl class="simple">
+<dt>Параметры:</dt><dd><p>sender (Type[User]): Класс <cite>User</cite>.
+instance (User): Экземпляр <cite>User</cite>.
+created (bool): Флаг, указывающий на то, был ли объект <cite>User</cite> только что создан.
+<a href="#id9"><span class="problematic" id="id10">**</span></a>kwargs: Дополнительные аргументы.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-apps.authentication.tests">
+<span id="apps-authentication-tests-module"></span><h2>apps.authentication.tests module<a class="headerlink" href="#module-apps.authentication.tests" title="Permalink to this heading">¶</a></h2>
+<p>Copyright (c) 2019 - present AppSeed.us</p>
+</section>
+<section id="module-apps.authentication.tokens">
+<span id="apps-authentication-tokens-module"></span><h2>apps.authentication.tokens module<a class="headerlink" href="#module-apps.authentication.tokens" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.authentication.tokens.TokenGenerator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apps.authentication.tokens.</span></span><span class="sig-name descname"><span class="pre">TokenGenerator</span></span><a class="reference internal" href="_modules/apps/authentication/tokens.html#TokenGenerator"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.tokens.TokenGenerator" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">PasswordResetTokenGenerator</span></code></p>
+</div></blockquote>
+<p>Генератор токена для сброса пароля.</p>
+<section id="id11">
+<h3>Методы:<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>_make_hash_value(self, user, timestamp):</dt><dd><p>Создает хеш для токена.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-apps.authentication.urls">
+<span id="apps-authentication-urls-module"></span><h2>apps.authentication.urls module<a class="headerlink" href="#module-apps.authentication.urls" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-apps.authentication.views">
+<span id="apps-authentication-views-module"></span><h2>apps.authentication.views module<a class="headerlink" href="#module-apps.authentication.views" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.EditProfile">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">EditProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#EditProfile"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.EditProfile" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Редактирование профиля пользователя.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – HttpRequest объект, представляющий запрос.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponse объект.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.ResetPassword">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">ResetPassword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#ResetPassword"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.ResetPassword" title="Ссылка на это определение">¶</a></dt>
+<dd><dl class="simple">
+<dt>Функция принимает объект запроса request и идентификатор пользователя id. Она выполняет сброс пароля пользователя</dt><dd><p>и возвращает его на страницу входа в случае успешного сброса.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> – объект HttpRequest, содержащий информацию о запросе</p></li>
+<li><p><strong>id</strong> – идентификатор пользователя, чей пароль должен быть сброшен.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponse: объект ответа, который возвращает пользователя на страницу входа в случае успешного
+сброса пароля или перенаправляет его на страницу входа, если нет активной сессии сброса пароля.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.ResetPasswordLink">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">ResetPasswordLink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uidb64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#ResetPasswordLink"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.ResetPasswordLink" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция выполняет декодирование <cite>uidb64</cite> в строку, затем получает пользователя <cite>user</cite>
+с помощью этого значения <cite>uid</cite>. Если пользователь существует и токен является действительным,
+то идентификатор пользователя устанавливается в сеансе и происходит перенаправление на страницу
+сброса пароля <cite>passwordReset</cite>. Если пользователь не существует или токен недействительный,
+возвращается <cite>HttpResponse</cite> с сообщением «Ссылка на сброс пароля недействительна!».</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> – объект HttpRequest, содержащий информацию о запросе</p></li>
+<li><p><strong>uidb64</strong> – строка, содержащая закодированный идентификатор пользователя</p></li>
+<li><p><strong>token</strong> – строка, содержащая токен для проверки действительности ссылки на сброс пароля</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Если пользователь существует и токен является действительным,</p>
+</dd>
+</dl>
+<p>то идентификатор пользователя устанавливается в сеансе и происходит перенаправление на страницу
+сброса пароля <cite>passwordReset</cite>. Если пользователь не существует или токен недействительный,
+возвращается <cite>HttpResponse</cite> с сообщением «Ссылка на сброс пароля недействительна!».</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.activate">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">activate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uidb64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#activate"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.activate" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Представление для активации учётной записи пользователя по электронной почте.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> – HttpRequest объект, представляющий запрос.</p></li>
+<li><p><strong>uidb64</strong> – строка, представляющая идентификатор пользователя в кодировке base64</p></li>
+<li><p><strong>token</strong> – токен для проверки подлинности активации</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponse объект, который перенаправляет пользователя на страницу входа, если активация прошла успешно.
+Если токен недействителен, возвращается ответ с текстом «Activation link is invalid!».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.deleteAccount">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">deleteAccount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#deleteAccount"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.deleteAccount" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Функция  удаляет учетную запись пользователя.
+:param request: объект HttpRequest, содержащий информацию о запросе
+:return: Если пользователь не авторизован, функция перенаправляет на страницу входа.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Если метод запроса POST и форма действительна, функция удаляет учетную запись пользователя,</dt><dd><p>удаляет идентификатор пользователя из сеанса и перенаправляет на страницу входа.</p>
+</dd>
+<dt>Если метод запроса не POST, функция возвращает форму удаления учетной записи пользователя и рендерит шаблон</dt><dd><p>Delete_account.html.</p>
+</dd>
+<dt>Если метод запроса POST и форма недействительна, функция возвращает форму удаления учетной записи пользователя,</dt><dd><p>сообщение об ошибке и рендерит шаблон Delete_account.html.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.emailPasswordReset">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">emailPasswordReset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#emailPasswordReset"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.emailPasswordReset" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Функция отправляет на email пользователя ссылку для сброса пароля.
+:param request: объект HttpRequest, содержащий информацию о запросе
+:return: Если запрос отправлен методом POST и форма валидна,
+то возвращается HttpResponse с сообщением о необходимости подтверждения email.</p>
+</div></blockquote>
+<p>Если запрос отправлен методом POST и форма не валидна, то возвращается HttpResponse с сообщением об ошибке.
+Если запрос отправлен методом GET, то возвращается HTML-страница с формой ResetPasswordEmailForm.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.profile">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#profile"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.profile" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Отображает страницу профиля пользователя с информацией о его проектах и пожертвованиях.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – HttpRequest объект, представляющий запрос.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Возвращает объект ответа, который содержит результат рендеринга шаблона HTML.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.signup">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">signup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#signup"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.signup" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Отображение страницы регистрации и обработка POST-запросов на создание нового пользователя.
+Если пользователь уже аутентифицирован, перенаправляет на главную страницу.
+:param request: HttpRequest объект, представляющий запрос.
+:return: HttpResponse объект, представляющий ответ.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.user_login">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">user_login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#user_login"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.user_login" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция для авторизации пользователей
+:param request: HttpRequest объект, представляющий запрос.
+:return: HttpResponse в случае успешной авторизации или рендеринг страницы с формой входа в случае ошибки</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.authentication.views.user_logout">
+<span class="sig-prename descclassname"><span class="pre">apps.authentication.views.</span></span><span class="sig-name descname"><span class="pre">user_logout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/authentication/views.html#user_logout"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#apps.authentication.views.user_logout" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Осуществляет выход пользователя из системы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – HttpRequest объект, представляющий запрос.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>объект HttpResponseRedirect, который перенаправляет на страницу входа (login).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-apps.authentication">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apps.authentication" title="Permalink to this heading">¶</a></h2>
+<p>Copyright (c) 2019 - present AppSeed.us</p>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="apps.html"
+       title="предыдущая глава">← apps package</a>
+  </li>
+  <li class="next">
+    <a href="apps.authentication.migrations.html"
+       title="следующая глава">apps.authentication.migrations package →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2023, Stocksmin.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

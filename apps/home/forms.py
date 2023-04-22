@@ -7,6 +7,21 @@ from django.forms.widgets import NumberInput
 
 
 class Project_Form(forms.ModelForm):
+    """
+    Форма создания/редактирования проекта.
+
+    Поля:
+    - title (CharField): заголовок проекта;
+    - details (CharField): детали проекта;
+    - total_target (FloatField): цель проекта;
+    - start_time (DateTimeField): дата и время начала проекта;
+    - end_time (DateTimeField): дата и время окончания проекта;
+    - category (ModelChoiceField): категория проекта;
+    - tag (ModelMultipleChoiceField): теги проекта.
+
+    Методы:
+    - clean: проверка валидности формы.
+    """
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -76,6 +91,12 @@ class Project_Form(forms.ModelForm):
                   'tag')
         
     def clean(self):
+        """
+            Проверка валидности формы.
+
+            Проверяет, что дата окончания проекта не раньше текущей даты,
+            и что дата окончания проекта не раньше даты начала проекта.
+        """
         cleaned_data = super().clean()
         start_date = cleaned_data.get("start_time")
         end_date = cleaned_data.get("end_time")
@@ -91,25 +112,45 @@ class Project_Form(forms.ModelForm):
    
 
 class Report_form(forms.ModelForm):
+    """
+    Класс Report_form представляет собой форму для модели Project_Report, содержащую единственное поле report.
+
+
+    Атрибуты:
+            Meta: Вложенный класс, содержащий метаданные формы.
+                model (django.db.models.Model): Связанная модель.
+                fields (list): Список полей, которые должны быть включены в форму.
+    """
     
     class Meta:
+        """
+        Атрибут model класса Meta указывает на модель, с которой связана форма. Поле report будет отображаться в форме.
+        """
         model=Project_Report
         fields=['report']
 
 class Comment_report_form(forms.ModelForm):
-    
+    """
+        Форма для отправки жалобы на комментарий.
+    """
     class Meta:
         model=Comment_Report
         fields=['report']
 
 class Reply_form(forms.ModelForm):
-
+    """
+        Модельная форма для создания объектов модели Reply.
+    """
     class Meta:
         model=Reply
         fields =['reply']
 
 class Category_form(forms.ModelForm):
-
+    """
+    Атрибут model указывает модель, связанную с данной формой, в данном случае Category.
+    Атрибут fields определяет, какие поля из этой модели будут отображаться на форме.
+    В данном случае на форме отображается только поле name, которое позволяет задать название категории.
+    """
     class Meta:
         model=Category
         fields=['name']

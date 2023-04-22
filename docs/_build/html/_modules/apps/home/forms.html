@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html  lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>apps.home.forms</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/translations.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+  <link rel="search" title="Поиск" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">crowdfundingWebApp</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Быстрый поиск</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Поиск" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../modules.html#crowdfundingwebapp">crowdfundingwebapp</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../apps.html" class="reference internal ">apps package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../core.html" class="reference internal ">core package</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../gunicorn-cfg.html" class="reference internal ">gunicorn-cfg module</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../manage.html" class="reference internal ">manage module</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">Код модуля</a> &raquo;</li>
+    
+    <li>apps.home.forms</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <h1>Исходный код apps.home.forms</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">apps.authentication.models</span> <span class="kn">import</span> <span class="n">Register</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Category</span><span class="p">,</span> <span class="n">Comment_Report</span><span class="p">,</span> <span class="n">Project</span><span class="p">,</span> <span class="n">Project_Report</span><span class="p">,</span> <span class="n">Reply</span><span class="p">,</span> <span class="n">Tag</span>
+<span class="kn">from</span> <span class="nn">django.forms.widgets</span> <span class="kn">import</span> <span class="n">NumberInput</span>
+
+
+<div class="viewcode-block" id="Project_Form"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Project_Form">[документация]</a><span class="k">class</span> <span class="nc">Project_Form</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Форма создания/редактирования проекта.</span>
+
+<span class="sd">    Поля:</span>
+<span class="sd">    - title (CharField): заголовок проекта;</span>
+<span class="sd">    - details (CharField): детали проекта;</span>
+<span class="sd">    - total_target (FloatField): цель проекта;</span>
+<span class="sd">    - start_time (DateTimeField): дата и время начала проекта;</span>
+<span class="sd">    - end_time (DateTimeField): дата и время окончания проекта;</span>
+<span class="sd">    - category (ModelChoiceField): категория проекта;</span>
+<span class="sd">    - tag (ModelMultipleChoiceField): теги проекта.</span>
+
+<span class="sd">    Методы:</span>
+<span class="sd">    - clean: проверка валидности формы.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Title&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+            <span class="p">}</span>
+        <span class="p">))</span>
+    
+    <span class="n">details</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Details&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;rows&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span>
+            <span class="p">}</span>
+        <span class="p">))</span>
+    
+    <span class="n">total_target</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">TextInput</span><span class="p">(</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Total Target&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;onkeypress&quot;</span><span class="p">:</span><span class="s2">&quot;return (event.charCode !=8 &amp;&amp; event.charCode ==0 || (event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57))&quot;</span>
+            <span class="p">}</span>
+        <span class="p">))</span>
+
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">NumberInput</span><span class="p">(</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="s1">&#39;Start date &amp; time&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime-local&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span>
+            <span class="p">}</span>
+        <span class="p">))</span>
+
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">NumberInput</span><span class="p">(</span>
+            <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span> <span class="s1">&#39;End date &amp; time&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime-local&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span>
+            <span class="p">}</span>
+        <span class="p">))</span>
+
+    <span class="n">category</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelChoiceField</span><span class="p">(</span><span class="n">queryset</span><span class="o">=</span><span class="n">Category</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+                                      <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}</span>
+    <span class="p">))</span>
+   
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelMultipleChoiceField</span><span class="p">(</span><span class="n">queryset</span><span class="o">=</span><span class="n">Tag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
+                                            <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">SelectMultiple</span><span class="p">(</span>
+        <span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;form-control&quot;</span>
+        <span class="p">}</span>
+    <span class="p">),</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Project_Form.Meta"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Project_Form.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Project</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;details&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;total_target&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;start_time&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;end_time&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;category&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;tag&#39;</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="Project_Form.clean"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Project_Form.clean">[документация]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Проверка валидности формы.</span>
+
+<span class="sd">            Проверяет, что дата окончания проекта не раньше текущей даты,</span>
+<span class="sd">            и что дата окончания проекта не раньше даты начала проекта.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+        <span class="n">start_date</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;start_time&quot;</span><span class="p">)</span>
+        <span class="n">end_date</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;end_time&quot;</span><span class="p">)</span>
+        <span class="n">today_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">),</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">today_date</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">end_date</span><span class="o">.</span><span class="n">date</span><span class="p">():</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;End date should be greater than Current date [ Should be after today !].&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">[</span><span class="s2">&quot;end_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_class</span><span class="p">([</span><span class="n">msg</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">end_date</span> <span class="o">&lt;=</span> <span class="n">start_date</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;End date should be greater than start date.&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">[</span><span class="s2">&quot;end_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_class</span><span class="p">([</span><span class="n">msg</span><span class="p">])</span></div></div>
+   
+
+<div class="viewcode-block" id="Report_form"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Report_form">[документация]</a><span class="k">class</span> <span class="nc">Report_form</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Класс Report_form представляет собой форму для модели Project_Report, содержащую единственное поле report.</span>
+
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">            Meta: Вложенный класс, содержащий метаданные формы.</span>
+<span class="sd">                model (django.db.models.Model): Связанная модель.</span>
+<span class="sd">                fields (list): Список полей, которые должны быть включены в форму.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="Report_form.Meta"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Report_form.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Атрибут model класса Meta указывает на модель, с которой связана форма. Поле report будет отображаться в форме.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">Project_Report</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;report&#39;</span><span class="p">]</span></div></div>
+
+<div class="viewcode-block" id="Comment_report_form"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Comment_report_form">[документация]</a><span class="k">class</span> <span class="nc">Comment_report_form</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Форма для отправки жалобы на комментарий.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Comment_report_form.Meta"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Comment_report_form.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">Comment_Report</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;report&#39;</span><span class="p">]</span></div></div>
+
+<div class="viewcode-block" id="Reply_form"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Reply_form">[документация]</a><span class="k">class</span> <span class="nc">Reply_form</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Модельная форма для создания объектов модели Reply.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Reply_form.Meta"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Reply_form.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">Reply</span>
+        <span class="n">fields</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;reply&#39;</span><span class="p">]</span></div></div>
+
+<div class="viewcode-block" id="Category_form"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Category_form">[документация]</a><span class="k">class</span> <span class="nc">Category_form</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Атрибут model указывает модель, связанную с данной формой, в данном случае Category.</span>
+<span class="sd">    Атрибут fields определяет, какие поля из этой модели будут отображаться на форме.</span>
+<span class="sd">    В данном случае на форме отображается только поле name, которое позволяет задать название категории.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Category_form.Meta"><a class="viewcode-back" href="../../../apps.home.html#apps.home.forms.Category_form.Meta">[документация]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">Category</span>
+        <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span></div></div>
+
+    <span class="c1"># def clean(self):</span>
+    <span class="c1">#     categories=Category.objects.all()</span>
+    <span class="c1">#     cleaned_data = super().clean()</span>
+    <span class="c1">#     name = cleaned_data.get(&quot;name&quot;)</span>
+    <span class="c1">#     for category in categories:</span>
+    <span class="c1">#         if name == category.name:</span>
+    <span class="c1">#             print(&#39;mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm&#39;)</span>
+    <span class="c1">#             msg = &quot;not valid clean&quot;</span>
+    <span class="c1">#             self._errors[&quot;name&quot;] = self.error_class([msg])</span>
+    <span class="c1">#             break</span>
+    <span class="c1">#         else:</span>
+    <span class="c1">#             print(&#39;qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq&#39;)</span>
+            
+        
+          
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2023, Stocksmin.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 6.1.3 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
